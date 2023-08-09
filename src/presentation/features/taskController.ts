@@ -12,7 +12,7 @@ const createScheduleSchema = z.object({
       required_error: "description is required",
       invalid_type_error: "description have to be a string"
     })
-  });
+});
 
 const routes: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.post('/schedule', async (request, reply) => {
