@@ -1,7 +1,9 @@
 import { FastifyPluginCallback, RequestGenericInterface } from 'fastify'
 import { z } from 'zod'
-import * as schedules from '../../data/database/schedule'
-import {} from '@/domain/features/taskSchedulerUseCase'
+import { TaskSchedulerRepository } from '../../data/repository/scheduler/taskSchedulerRepository'
+import { TaskScheduleInterface } from '@/domain/protocols/taskScheduleInterface'
+import { MissingParamError } from '../helpers/missingParamError';
+import { HttpResponse } from '../helpers/httpResponse';
 
 const createScheduleSchema = z.object({
     name: z.string({
@@ -14,6 +16,8 @@ const createScheduleSchema = z.object({
     })
 });
 
+const repository: TaskScheduleInterface = new TaskSchedulerRepository()
+
 const routes: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.post('/schedule', async (request, reply) => {
     try {
@@ -25,9 +29,9 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
         return;
       }
 
-      const newSchedule = await schedules.saveSchedule(body)
+      const newSchedule = await repository.saveSchedule(body)
 
-      reply.code(201).send(newSchedule)
+      reply.code(201).send(newSchedule) 
 
     } catch (error) {
 
@@ -40,7 +44,7 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.get('/schedule', async (request, reply) => {
     try {
 
-      const allSchedules = await schedules.getAllSchedule()
+      const allSchedules = await repository.getAllSchedule()
       reply.code(201).send(allSchedules);
 
     } catch (error) {
@@ -56,7 +60,7 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
       const { name } = Object(request.params)
       console.log(request.params)
       if(!name) return reply.code(404).send("Nenhuma task task encontrada.")
-      const allSchedulesByName = await schedules.getScheduleByName(name);
+      const allSchedulesByName = await repository.getScheduleByName(name);
       reply.code(201).send(allSchedulesByName)
     } catch (error) {
 
@@ -77,7 +81,7 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
         return;
       }
 
-      const updateSchedule = await schedules.updateSchedule(id, body)
+      const updateSchedule = await repository.updateSchedule(id, body)
       reply.code(201).send(updateSchedule)
 
     } catch (error) {
@@ -92,7 +96,7 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
     try {
 
       const { id } = Object(request.params)
-      const deletedSchedule = await schedules.deleteSchedule(id)
+      const deletedSchedule = await repository.deleteSchedule(id)
       reply.code(201).send(deletedSchedule);
 
     } catch (error) {

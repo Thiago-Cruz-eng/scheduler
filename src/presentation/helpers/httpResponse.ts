@@ -1,4 +1,6 @@
-class HttpResponse {
+import { MissingParamError } from "./missingParamError"
+
+export class HttpResponse {
     static serverError () {
         return {
         statusCode: 500

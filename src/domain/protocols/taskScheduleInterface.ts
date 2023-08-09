@@ -3,6 +3,6 @@ export interface TaskScheduleInterface {
     saveSchedule(schedule: TaskScheduleData): void
     getAllSchedule(): void
     getScheduleByName(name: string): void
-    updateSchedule(id: string, schedule: TaskScheduleInterface): void
+    updateSchedule(id: string, schedule: TaskScheduleData): void
     deleteSchedule(id: string): void
 }
