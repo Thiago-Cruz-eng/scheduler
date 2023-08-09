@@ -21,7 +21,7 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
       const body = createScheduleSchema.parse(request.body);
 
       if (!body.name) {
-        reply.code(400).send({ error: 'name and date are required fields.' })
+        reply.code(400).send(new MissingParamError('name'))
         return;
       }
 
@@ -32,7 +32,7 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
     } catch (error) {
 
       console.error(error)
-      reply.code(500).send({ error: 'Internal server error.' })
+      reply.code(500).send(HttpResponse.serverError)
 
     }
   });
@@ -46,7 +46,7 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
     } catch (error) {
 
       console.error(error);
-      reply.code(500).send({ error: 'Internal server error.' })
+      reply.code(500).send(HttpResponse.serverError)
 
     }
   })
@@ -61,7 +61,7 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
     } catch (error) {
 
       console.error(error)
-      reply.code(500).send({ error: 'Internal server error.' })
+      reply.code(500).send(HttpResponse.serverError)
 
     }
   })
@@ -73,7 +73,7 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
       const body = createScheduleSchema.parse(request.body)
 
       if (!body.name) {
-        reply.code(400).send({ error: 'name and date are required fields.' });
+        reply.code(400).send(new MissingParamError('name'));
         return;
       }
 
@@ -83,7 +83,7 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
     } catch (error) {
 
       console.error(error);
-      reply.code(500).send({ error: 'Internal server error.' })
+      reply.code(500).send(HttpResponse.serverError)
 
     }
   });
@@ -98,7 +98,7 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
     } catch (error) {
 
       console.error(error);
-      reply.code(500).send({ error: 'Internal server error.' })
+      reply.code(500).send(HttpResponse.serverError)
 
     }
   });
@@ -108,7 +108,7 @@ const routes: FastifyPluginCallback = (fastify, opts, done) => {
       reply.send("Running");
     } catch (error) {
       console.error(error);
-      reply.code(500).send({ error: 'Internal server error.' });
+      reply.code(500).send(HttpResponse.serverError)
     }
   });
   done();
