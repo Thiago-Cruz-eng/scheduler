@@ -1,4 +1,4 @@
-import { prisma } from '../prisma/prisma'
+import { prisma } from '../../../prisma/prisma'
 import { TaskScheduleInterface } from '../../domain/protocols/taskScheduleInterface'
 
 export const saveSchedule = (schedule: TaskScheduleInterface) => {

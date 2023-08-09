@@ -16,5 +16,5 @@ model schedule {
   description  String
   dateSchedule DateTime          @default(now())
   done         Boolean           @default(false)
-  deleted         Boolean           @default(false)
+  deleted      Boolean           @default(false)
 }

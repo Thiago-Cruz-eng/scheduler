@@ -3,10 +3,9 @@ import { TaskScheduleInterface } from "../protocols/taskScheduleInterface"
 import { TaskScheduleData } from "../models/taskScheduleData"
 
 export class TaskSchedulerUseCase extends BaseUseCase<boolean> {
-    private dataTask: TaskScheduleData
+    //private dataTask: TaskScheduleData
 
     constructor() {
-        const dataTask = this.dataTask
         super()
     }
     
@@ -15,9 +14,6 @@ export class TaskSchedulerUseCase extends BaseUseCase<boolean> {
     }
 
     protected buildUseCase() {
-        if(!this.dataTask) {
-            return badRequest(new MissingDataError())
-        }
-        return this.service.cancelEmail(this.cancelData)
+
     }
 }
