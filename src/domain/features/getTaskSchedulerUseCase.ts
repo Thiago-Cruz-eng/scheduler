@@ -1,10 +1,10 @@
-import { TaskSchedulerRepository } from "@/data/repository/scheduler/taskSchedulerRepository";
-import { TaskScheduleData } from "../models/taskScheduleData";
-import { TaskScheduleInterface } from "../protocols/taskScheduleInterface";
-import { MissingParamError } from "@/presentation/helpers/missingParamError";
+import TaskSchedulerRepository from "@/data/repository/scheduler/taskSchedulerRepository";
+import { TaskScheduleData } from "@/domain/models/taskScheduleData";
+import { TaskScheduleInterface } from "@/domain/protocols/taskScheduleInterface";
 import { HttpResponse } from "@/presentation/helpers/httpResponse";
+import { BaseUseCase } from "@/infra/base/baseUseCase";
 
-export class GetTaskSchedulerUseCase {
+export class GetTaskSchedulerUseCase implements BaseUseCase {
     private payload?: TaskScheduleData
     private repository: TaskScheduleInterface = new TaskSchedulerRepository()
     constructor(payload?: TaskScheduleData) {

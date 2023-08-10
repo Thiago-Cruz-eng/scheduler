@@ -1,8 +1,8 @@
 import { TaskScheduleInterface } from '@/domain/protocols/taskScheduleInterface'
 import { prisma } from '../../../../prisma/prisma'
-import { TaskScheduleData } from '../../../domain/models/taskScheduleData'
+import { TaskScheduleData } from '@/domain/models/taskScheduleData'
 
-export class TaskSchedulerRepository implements TaskScheduleInterface {
+export default class TaskSchedulerRepository implements TaskScheduleInterface {
     saveSchedule(schedule: TaskScheduleData): any {
         return prisma.schedule.create({
             data: schedule
