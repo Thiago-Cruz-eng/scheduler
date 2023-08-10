@@ -5,4 +5,6 @@ export interface TaskScheduleInterface {
     getScheduleByName(name: string): object
     updateSchedule(id: string, schedule: TaskScheduleData): object
     deleteSchedule(id: string): object
+    getFilterSchedulerByDate(): object
+    getFilterSchedulerByDone(): object
 }
