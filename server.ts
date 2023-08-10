@@ -1,10 +1,15 @@
 import fastify from 'fastify';
-import routes from "./src/presentation/features/taskController"
+import { TaskSchedulerController } from "./src/presentation/features/taskController"
 
 
 const server = fastify()
 
-server.register(routes)
+server.register((app, options, done) => {
+  const routes = new TaskSchedulerController(server, );
+
+  routes.setupRoutes();
+
+}, {logger: true})
 
 const start = async () => {
   server.listen({ port: 8080 }, (err, address) => {

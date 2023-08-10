@@ -13,4 +13,17 @@ export class HttpResponse {
         body: new MissingParamError(paramName)
         }
     }
+
+    static notFound (paramName: string) {
+        return {
+            stausCode: 404,
+            body: `${paramName}`
+        }
+    }
+
+    static goodRequest (paramName: object){
+        return {
+            body: new Object()
+        }
+    }
 }

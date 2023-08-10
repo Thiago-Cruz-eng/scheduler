@@ -1,8 +1,8 @@
 import {TaskScheduleData} from '@/domain/models/taskScheduleData'
 export interface TaskScheduleInterface {
-    saveSchedule(schedule: TaskScheduleData): void
-    getAllSchedule(): void
-    getScheduleByName(name: string): void
-    updateSchedule(id: string, schedule: TaskScheduleData): void
-    deleteSchedule(id: string): void
+    saveSchedule(schedule: TaskScheduleData): object
+    getAllSchedule(): object
+    getScheduleByName(name: string): object
+    updateSchedule(id: string, schedule: TaskScheduleData): object
+    deleteSchedule(id: string): object
 }
