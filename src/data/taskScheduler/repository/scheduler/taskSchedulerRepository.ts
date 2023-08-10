@@ -1,6 +1,6 @@
-import { TaskScheduleInterface } from '@/domain/protocols/taskScheduleInterface'
-import { prisma } from '../../../../prisma/prisma'
-import { TaskScheduleData } from '@/domain/models/taskScheduleData'
+import { TaskScheduleData } from '../../../../domain/models/taskScheduleData'
+import { prisma } from '../../../../../prisma/prisma'
+import { TaskScheduleInterface } from '../../../../domain/protocols/taskScheduleInterface'
 
 export default class TaskSchedulerRepository implements TaskScheduleInterface {
     saveSchedule(schedule: TaskScheduleData): any {
@@ -10,15 +10,18 @@ export default class TaskSchedulerRepository implements TaskScheduleInterface {
     }
 
     getAllSchedule(): any {
-        return prisma.schedule.findMany()
+        return prisma.schedule.findMany({
+            where: {
+                deleted: false
+            }
+        })
     }
     
     getScheduleByName(name: string): any {
+        console.log(name)
         return prisma.schedule.findMany({
             where: {
-                name: {
-                    equals: name
-                },
+                name: name
             }
         })
     }

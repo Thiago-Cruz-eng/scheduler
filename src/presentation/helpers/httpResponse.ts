@@ -23,7 +23,7 @@ export class HttpResponse {
 
     static goodRequest (paramName: object){
         return {
-            body: new Object()
+            body: new Object(paramName)
         }
     }
 }

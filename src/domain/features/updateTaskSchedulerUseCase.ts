@@ -1,10 +1,10 @@
-import TaskSchedulerRepository from "@/data/repository/scheduler/taskSchedulerRepository";
-import { TaskScheduleData } from "@/domain/models/taskScheduleData";
-import { TaskScheduleInterface } from "@/domain/protocols/taskScheduleInterface";
-import { HttpResponse } from "@/presentation/helpers/httpResponse";
-import { MissingParamError } from "@/presentation/helpers/missingParamError";
-import { MissingBodyError } from "@/presentation/helpers/missingBodyError";
-import { BaseUseCase } from "@/infra/base/baseUseCase";
+import TaskSchedulerRepository  from "../../data/taskScheduler/repository/scheduler/taskSchedulerRepository";
+import { TaskScheduleData } from "../../domain/models/taskScheduleData";
+import { TaskScheduleInterface } from "../../domain/protocols/taskScheduleInterface";
+import { HttpResponse } from "../../presentation/helpers/httpResponse";
+import { MissingParamError } from "../../presentation/helpers/missingParamError";
+import { MissingBodyError } from "../../presentation/helpers/missingBodyError";
+import { BaseUseCase } from "../../infra/base/baseUseCase";
 
 export class UpdateTaskSchedulerUseCase implements BaseUseCase {
     private id: string
@@ -24,7 +24,7 @@ export class UpdateTaskSchedulerUseCase implements BaseUseCase {
             return new MissingBodyError('name');
         }
 
-        const schedule = this.repository.getAllSchedule()
+        const schedule = await this.repository.updateSchedule(this.id, this.payload)
         return HttpResponse.goodRequest(schedule)
     }
 }

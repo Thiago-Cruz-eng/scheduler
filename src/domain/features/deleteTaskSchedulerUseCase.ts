@@ -1,8 +1,8 @@
-import TaskSchedulerRepository from "@/data/repository/scheduler/taskSchedulerRepository";
-import { TaskScheduleInterface } from "@/domain/protocols/taskScheduleInterface";
-import { MissingParamError } from "@/presentation/helpers/missingParamError";
-import { HttpResponse } from "@/presentation/helpers/httpResponse";
-import { BaseUseCase } from "@/infra/base/baseUseCase";
+import TaskSchedulerRepository  from "../../data/taskScheduler/repository/scheduler/taskSchedulerRepository";
+import { TaskScheduleInterface } from "../../domain/protocols/taskScheduleInterface";
+import { MissingParamError } from "../../presentation/helpers/missingParamError";
+import { HttpResponse } from "../../presentation/helpers/httpResponse";
+import { BaseUseCase } from "../../infra/base/baseUseCase";
 
 export class DeleteTaskSchedulerUseCase implements BaseUseCase {
     private payload: string
@@ -16,7 +16,7 @@ export class DeleteTaskSchedulerUseCase implements BaseUseCase {
           return new MissingParamError('id')
         }
 
-        const deletedSchedule = this.repository.deleteSchedule(this.payload)
+        const deletedSchedule = await this.repository.deleteSchedule(this.payload)
         return HttpResponse.goodRequest(deletedSchedule)
     }
 }

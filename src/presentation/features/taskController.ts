@@ -1,11 +1,10 @@
-import { FastifyInstance } from 'fastify'
+import { FastifyPluginCallback, RequestGenericInterface } from 'fastify'
 import { z } from 'zod'
-import { HttpResponse } from '@/presentation/helpers/httpResponse';
-import { CreateTaskSchedulerUseCase } from '@/domain/features/createTaskSchedulerUseCase';
-import { DeleteTaskSchedulerUseCase } from '@/domain/features/deleteTaskSchedulerUseCase';
-import { GetTaskSchedulerUseCase } from '@/domain/features/getTaskSchedulerUseCase';
-import { UpdateTaskSchedulerUseCase } from '@/domain/features/updateTaskSchedulerUseCase';
-
+import { CreateTaskSchedulerUseCase } from "../../domain/features/createTaskSchedulerUseCase"
+import { HttpResponse } from '../helpers/httpResponse';
+import { GetTaskSchedulerUseCase } from '../../domain/features/getTaskSchedulerUseCase';
+import { UpdateTaskSchedulerUseCase } from '../../domain/features/updateTaskSchedulerUseCase';
+import { DeleteTaskSchedulerUseCase } from '../../domain/features/deleteTaskSchedulerUseCase';
 
 const createScheduleSchema = z.object({
     name: z.string({
@@ -16,11 +15,10 @@ const createScheduleSchema = z.object({
       required_error: "description is required",
       invalid_type_error: "description have to be a string"
     })
-});
+  });
 
-export default class TaskSchedulerController {
-
-  private saveSchedule = async(request:any, reply:any) => {
+const routes: FastifyPluginCallback = (fastify, opts, done) => {
+  fastify.post('/schedule', async (request, reply) => {
     try {
 
       const body = createScheduleSchema.parse(request.body);
@@ -36,10 +34,10 @@ export default class TaskSchedulerController {
       reply.code(500).send(HttpResponse.serverError)
 
     }
-  }
+  });
 
-  private getAllSchedule = async(request:any, reply:any) => {
-     try {
+  fastify.get('/schedule', async (request, reply) => {
+    try {
 
       const getAll = new GetTaskSchedulerUseCase()
 
@@ -52,9 +50,9 @@ export default class TaskSchedulerController {
       reply.code(500).send(HttpResponse.serverError)
 
     }
-  }
+  })
 
-  private getScheduleByName = async(request:any, reply:any) => {
+  fastify.get('/schedules/:name', async (request, reply) => {
     try {
       const { name } = Object(request.params)
       const getByName = new GetTaskSchedulerUseCase(name)
@@ -67,10 +65,10 @@ export default class TaskSchedulerController {
       reply.code(500).send(HttpResponse.serverError)
 
     }
-  }
+  })
 
-  private updateSchedule = async(request:any, reply:any) => {
-     try {
+  fastify.put('/schedule/:id', async (request, reply) => {  
+    try {
       const { id }  = Object(request.params)
       const body = createScheduleSchema.parse(request.body)
       const updateSchedule = new UpdateTaskSchedulerUseCase(id, body)
@@ -84,9 +82,9 @@ export default class TaskSchedulerController {
       reply.code(500).send(HttpResponse.serverError)
 
     }
-  }
+  });
 
-  private deleteSchedule = async(request:any, reply:any) => {
+  fastify.delete('/schedule/:id', async (request, reply) => {
     try {
 
       const { id } = Object(request.params)
@@ -101,13 +99,17 @@ export default class TaskSchedulerController {
       reply.code(500).send(HttpResponse.serverError)
 
     }
-  }
+  });
 
-  setupRoutes(server: FastifyInstance): any {
-    server.post('/schedule', this.saveSchedule)
-    server.get('/schedule', this.getAllSchedule)
-    server.get('/schedules/:name', this.getScheduleByName)
-    server.put('/schedule/:id', this.updateSchedule)
-    server.delete('/schedule/:id', this.deleteSchedule)
-  }
-}
+  fastify.get('/health', async (request, reply) => {
+    try {
+      reply.send("Running");
+    } catch (error) {
+      console.error(error);
+      reply.code(500).send({ error: 'Internal server error.' });
+    }
+  });
+  done();
+};
+
+export default routes;
