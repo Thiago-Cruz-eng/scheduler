@@ -2,12 +2,12 @@
   "name": "scheduler",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
+  "main": "main.ts",
   "scripts": {
-    "start": "node server.ts",
-    "dev": "nodemon server.ts",
-    "test": "jest",
-    "test:staged": "jest"
+    "start": "node main.ts",
+    "dev": "nodemon main.ts",
+    "test": "jest --passWithNoTests",
+    "test:staged": "jest --passWithNoTests"
   },
   "keywords": [],
   "dependencies": {

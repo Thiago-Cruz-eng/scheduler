@@ -1,4 +1,4 @@
-import type { FastifyPluginCallback } from 'fastify'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import { CreateTaskSchedulerUseCase } from '../../domain/features/createTaskSchedulerUseCase'
 import { HttpResponse } from '../helpers/httpResponse'
@@ -17,82 +17,77 @@ const createScheduleSchema = z.object({
   })
 })
 
-const routes: FastifyPluginCallback = (fastify, opts, done) => {
-  fastify.post('/schedule', async (request, reply) => {
-    try {
-      const body = createScheduleSchema.parse(request.body)
-      const create = new CreateTaskSchedulerUseCase(body)
+export const postSchedule = async (request: FastifyRequest, reply: FastifyReply): Promise<object> => {
+  try {
+    const body = createScheduleSchema.parse(request.body)
+    const create = new CreateTaskSchedulerUseCase(body)
 
-      const newSchedule = await create.execute()
+    const newSchedule = await create.execute()
 
-      await reply.code(201).send(newSchedule)
-    } catch (error) {
-      console.error(error)
-      await reply.code(500).send(HttpResponse.serverError)
-    }
-  })
-
-  fastify.get('/schedule', async (request, reply) => {
-    try {
-      const getAll = new GetTaskSchedulerUseCase()
-
-      const allSchedules = await getAll.execute()
-      await reply.code(201).send(allSchedules)
-    } catch (error) {
-      console.error(error)
-      await reply.code(500).send(HttpResponse.serverError)
-    }
-  })
-
-  fastify.get('/schedules/:name', async (request, reply) => {
-    try {
-      const { name } = Object(request.params)
-      const getByName = new GetTaskSchedulerUseCase(name)
-
-      const allSchedulesByName = await getByName.execute()
-      await reply.code(201).send(allSchedulesByName)
-    } catch (error) {
-      console.error(error)
-      await reply.code(500).send(HttpResponse.serverError)
-    }
-  })
-
-  fastify.put('/schedule/:id', async (request, reply) => {
-    try {
-      const { id } = Object(request.params)
-      const body = createScheduleSchema.parse(request.body)
-      const updateSchedule = new UpdateTaskSchedulerUseCase(id, body)
-
-      const updatedSchedule = await updateSchedule.execute()
-      await reply.code(201).send(updatedSchedule)
-    } catch (error) {
-      console.error(error)
-      await reply.code(500).send(HttpResponse.serverError)
-    }
-  })
-
-  fastify.delete('/schedule/:id', async (request, reply) => {
-    try {
-      const { id } = Object(request.params)
-      const toDelete = new DeleteTaskSchedulerUseCase(id)
-      const deleted = await toDelete.execute()
-
-      await reply.code(201).send(deleted)
-    } catch (error) {
-      console.error(error)
-      await reply.code(500).send(HttpResponse.serverError)
-    }
-  })
-
-  fastify.get('/health', async (request, reply) => {
-    try {
-      await reply.send('Running')
-    } catch (error) {
-      console.error(error)
-      await reply.code(500).send({ error: 'Internal server error.' })
-    }
-  })
-  done()
+    return await reply.code(201).send(newSchedule)
+  } catch (error) {
+    console.error(error)
+    return await reply.code(500).send(HttpResponse.serverError)
+  }
 }
 
-export default routes
+export const getAllSchedules = async (request: FastifyRequest, reply: FastifyReply): Promise<object> => {
+  try {
+    const getAll = new GetTaskSchedulerUseCase()
+
+    const allSchedules = await getAll.execute()
+    return await reply.code(201).send(allSchedules)
+  } catch (error) {
+    console.error(error)
+    return await reply.code(500).send(HttpResponse.serverError)
+  }
+}
+
+export const getScheduleByName = async (request: FastifyRequest, reply: FastifyReply): Promise<object> => {
+  try {
+    const { name } = Object(request.params)
+    const getByName = new GetTaskSchedulerUseCase(name)
+
+    const allSchedulesByName = await getByName.execute()
+    return await reply.code(201).send(allSchedulesByName)
+  } catch (error) {
+    console.error(error)
+    return await reply.code(500).send(HttpResponse.serverError)
+  }
+}
+
+export const updateSchedule = async (request: FastifyRequest, reply: FastifyReply): Promise<object> => {
+  try {
+    const { id } = Object(request.params)
+    const body = createScheduleSchema.parse(request.body)
+    const updateSchedule = new UpdateTaskSchedulerUseCase(id, body)
+
+    const updatedSchedule = await updateSchedule.execute()
+    return await reply.code(201).send(updatedSchedule)
+  } catch (error) {
+    console.error(error)
+    return await reply.code(500).send(HttpResponse.serverError)
+  }
+}
+
+export const deleteSchedule = async (request: FastifyRequest, reply: FastifyReply): Promise<object> => {
+  try {
+    const { id } = Object(request.params)
+    const toDelete = new DeleteTaskSchedulerUseCase(id)
+    const deleted = await toDelete.execute()
+
+    return await reply.code(201).send(deleted)
+  } catch (error) {
+    console.error(error)
+    return await reply.code(500).send(HttpResponse.serverError)
+  }
+}
+
+export const healthCheck = async (request: FastifyRequest, reply: FastifyReply): Promise<object> => {
+  try {
+    return await reply.send('Running')
+  } catch (error) {
+    console.error(error)
+    return await reply.code(500).send(HttpResponse.serverError)
+  }
+}

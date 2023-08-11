@@ -1,8 +1,8 @@
-import TaskSchedulerRepository from '@/data/taskScheduler/repository/scheduler/taskSchedulerRepository'
-import { type TaskScheduleInterface } from '@/domain/protocols/taskScheduleInterface'
+import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/taskSchedulerRepository'
+import { type TaskScheduleInterface } from '../../domain/protocols/taskScheduleInterface'
 import cron from 'node-cron'
 
-export default class setupCronJobs {
+export default class SetupCronJobs {
   private readonly repository: TaskScheduleInterface = new TaskSchedulerRepository()
   worker (): any {
     console.log('entrei')
