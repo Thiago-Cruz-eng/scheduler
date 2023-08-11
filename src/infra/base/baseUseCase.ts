@@ -1,3 +1,3 @@
 export interface BaseUseCase {
-  execute(): void;
+  execute(): void
 }

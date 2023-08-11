@@ -11,6 +11,10 @@
         "@typescript-eslint/method-signature-style": "off",
         "no-extra-semi": "off",
         "@typescript-eslint/member-delimiter-style": "off",
-        "semi": ["error", "never"]
+        "semi": ["error", "never"],
+        "@typescript-eslint/no-extraneous-class": "off",
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/await-thenable": "off",
+        "@typescript-eslint/no-misused-promises": "off"
       }
 }
