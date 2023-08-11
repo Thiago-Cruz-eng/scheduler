@@ -18,9 +18,9 @@
   "devDependencies": {
     "@types/node": "^20.4.9",
     "@types/node-cron": "^3.0.8",
+    "git-commit-msg-linter": "^5.0.4",
     "nodemon": "^2.0.22",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.3.0-dev.20230811"
   },
   "author": "",
   "license": "ISC"
