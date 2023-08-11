@@ -1,8 +1,8 @@
 import cron from 'node-cron'
 import { type TaskScheduleInterface } from '../../domain/protocols/taskScheduleInterface'
-import { type TaskSchedulerResponse } from '../protocols/TaskSchedulerResponse'
+import { type TaskSchedulerResponse } from '../protocols/response/TaskSchedulerResponse'
 import { CronExpression } from '../enum/cronEvent'
-import { type AxiosHttpRequest } from '../protocols/AxiosHttpRequest'
+import { type AxiosHttpRequest } from '../protocols/request/AxiosHttpRequest'
 
 export default class SetupCronJobs {
   private readonly repository: TaskScheduleInterface
@@ -14,34 +14,25 @@ export default class SetupCronJobs {
 
   worker (): any {
     try {
-      console.log('entrei')
       cron.schedule(CronExpression.EVERY_15_SECONDS, async () => {
         const isDate = await this.repository.getFilterSchedulerByDate()
         let isValidByDate: TaskSchedulerResponse
 
-        if (isDate) {
+        if (isDate && !isDate[0].done && !isDate[0].deleted) {
           for (isValidByDate of isDate) {
             if (!isValidByDate.done && !isValidByDate.deleted) {
-              console.log(isValidByDate)
-
-              const boredApiReturn = await this.boredApi.boredNeverMore()
-              console.log(boredApiReturn.data)
+              const boredApiResponse = await this.boredApi.boredNeverMore()
+              const dataIndoDataBase = await this.repository.updateApiReturn(isValidByDate.id, boredApiResponse.data.activity, new Date())
+              console.log(dataIndoDataBase)
             } else {
               return {
                 statusSchedule: 'no task schedule pending'
               }
             }
           }
+        } else {
+          console.log('no task schedule pending')
         }
-        // buscar na api (sei la, de piadas)
-        // se me retornar sucesso, gravar no banco que deu certo (done === 1) e hora que ocorreu DATE == NOW()
-
-        // axios http interface resquest and response
-        // criar campo no DB para savar o retorno da api
-        // pegar a response (que ta tipada) e incluir no db
-
-        // se nao acontecer por algum motivo? tenta novamente?
-        // se por acaso eu subir mais que uma instancia da aplic como seria o tratamento para nao rodar x vezes a mesma coisa?
       })
     } catch (error) {
       return {

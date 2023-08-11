@@ -5,4 +5,6 @@ export interface TaskSchedulerResponse {
   dateSchedule: Date
   done: boolean
   deleted: boolean
+  apiReturn: string
+  dateApiReturn: Date
 }

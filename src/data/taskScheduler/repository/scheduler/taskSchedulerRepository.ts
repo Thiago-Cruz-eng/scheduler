@@ -3,7 +3,7 @@ import { prisma } from '../../../../../prisma/prisma'
 import { type TaskScheduleInterface } from '../../../../domain/protocols/taskScheduleInterface'
 
 export default class TaskSchedulerRepository implements TaskScheduleInterface {
-  saveSchedule (schedule: TaskScheduleData): any {
+  saveSchedule (schedule: TaskScheduleData): object {
     return prisma.schedule.create({
       data: schedule
     })
@@ -52,6 +52,19 @@ export default class TaskSchedulerRepository implements TaskScheduleInterface {
         dateSchedule: {
           lte: new Date()
         }
+      }
+    })
+  }
+
+  updateApiReturn (id: string, returnOf: string, date: Date): object {
+    return prisma.schedule.update({
+      where: {
+        id
+      },
+      data: {
+        done: true,
+        apiReturn: returnOf,
+        dateApiReturn: date
       }
     })
   }

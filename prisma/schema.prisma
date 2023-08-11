@@ -17,4 +17,6 @@ model schedule {
   dateSchedule DateTime          @default(now())
   done         Boolean           @default(false)
   deleted      Boolean           @default(false)
+  apiReturn    String?          
+  dateApiReturn DateTime?     
 }
