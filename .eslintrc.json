@@ -1,0 +1,16 @@
+{
+    "extends": "standard-with-typescript",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "rules": {
+        "no-unused-vars": "off",
+        "eqeqeq": "off",
+        "curly": "error",
+        "quotes": ["error", "single"],
+        "@typescript-eslint/method-signature-style": "off",
+        "no-extra-semi": "off",
+        "@typescript-eslint/member-delimiter-style": "off",
+        "semi": ["error", "never"]
+      }
+}
