@@ -1,8 +1,8 @@
-import { MissingParamError } from '../../presentation/helpers/missingParamError'
+import { MissingParamError } from '../../presentation/helpers/MissingParamError'
 import { type TaskScheduleData } from '../../domain/models/taskScheduleData'
 import { type TaskScheduleInterface } from '../../domain/protocols/taskScheduleInterface'
 import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/taskSchedulerRepository'
-import { HttpResponse } from '../../presentation/helpers/httpResponse'
+import { HttpResponse } from '../../presentation/helpers/HttpResponse'
 import { type BaseUseCase } from '../../infra/base/baseUseCase'
 
 export class CreateTaskSchedulerUseCase implements BaseUseCase {

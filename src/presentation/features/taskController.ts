@@ -1,7 +1,7 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import { CreateTaskSchedulerUseCase } from '../../domain/features/createTaskSchedulerUseCase'
-import { HttpResponse } from '../helpers/httpResponse'
+import { HttpResponse } from '../helpers/HttpResponse'
 import { GetTaskSchedulerUseCase } from '../../domain/features/getTaskSchedulerUseCase'
 import { UpdateTaskSchedulerUseCase } from '../../domain/features/updateTaskSchedulerUseCase'
 import { DeleteTaskSchedulerUseCase } from '../../domain/features/deleteTaskSchedulerUseCase'

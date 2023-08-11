@@ -1,6 +1,7 @@
 import fastify from 'fastify'
 import { route } from './src/presentation/routes/routes'
 import SetupCronJobs from './src/presentation/jobs/worker'
+import TaskSchedulerRepository from './src/data/taskScheduler/repository/scheduler/taskSchedulerRepository'
 
 const server = fastify()
 
@@ -12,7 +13,7 @@ const start = async (): Promise<any> => {
       console.error(err)
       process.exit(1)
     }
-    const cron = new SetupCronJobs()
+    const cron = new SetupCronJobs(new TaskSchedulerRepository())
     cron.worker()
     console.log(`Server listening at ${address}`)
   })

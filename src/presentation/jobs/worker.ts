@@ -1,25 +1,43 @@
-import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/taskSchedulerRepository'
-import { type TaskScheduleInterface } from '../../domain/protocols/taskScheduleInterface'
 import cron from 'node-cron'
+import { type TaskScheduleInterface } from '../../domain/protocols/taskScheduleInterface'
+import { type TaskSchedulerResponse } from '../protocols/TaskSchedulerResponse'
 
 export default class SetupCronJobs {
-  private readonly repository: TaskScheduleInterface = new TaskSchedulerRepository()
+  private readonly repository: TaskScheduleInterface
+  constructor (repository: TaskScheduleInterface) {
+    this.repository = repository
+  }
+
   worker (): any {
-    console.log('entrei')
-    cron.schedule('*/15 * * * * *', async () => {
-      const isDate = await this.repository.getFilterSchedulerByDate()
-      const isDone = await this.repository.getFilterSchedulerByDone()
+    try {
+      console.log('entrei')
+      cron.schedule('*/15 * * * * *', async () => {
+        const isDate = await this.repository.getFilterSchedulerByDate()
+        let isValidByDate: TaskSchedulerResponse
 
-      // acessar meu banco e filtrar por DONE e entao por DATE
-      // verificar se DONE === 0 && DATE < NOW()
-      // buscar na api (sei la, de piadas)
-      // se me retornar sucesso, gravar no banco que deu certo (done === 1) e hora que ocorreu DATE == NOW()
+        if (isDate) {
+          for (isValidByDate of isDate) {
+            if (!isValidByDate.done && !isValidByDate.deleted) {
+              console.log(isValidByDate)
+            } else {
+              console.log('no task schedule pending')
+            }
+          }
+        }
 
-      // se nao acontecer por algum motivo? tenta novamente?
-      // se por acaso eu subir mais que uma instancia da aplic como seria o tratamento para nao rodar x vezes a mesma coisa?
+        // acessar meu banco e filtrar por DONE e entao por DATE
+        // verificar se DONE === 0 && DATE < NOW()
+        // buscar na api (sei la, de piadas)
+        // se me retornar sucesso, gravar no banco que deu certo (done === 1) e hora que ocorreu DATE == NOW()
 
-      console.log('---------------------')
-      console.log('running a task every 15 seconds')
-    })
+        // se nao acontecer por algum motivo? tenta novamente?
+        // se por acaso eu subir mais que uma instancia da aplic como seria o tratamento para nao rodar x vezes a mesma coisa?
+
+        console.log('---------------------')
+        console.log('running a task every 15 seconds')
+      })
+    } catch (error) {
+      console.log('cannot enter on worker job: ', error)
+    }
   }
 }

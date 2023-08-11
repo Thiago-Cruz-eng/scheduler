@@ -1,4 +1,4 @@
-import { MissingParamError } from './missingParamError'
+import { MissingParamError } from './MissingParamError'
 
 export class HttpResponse {
   static serverError (): object {

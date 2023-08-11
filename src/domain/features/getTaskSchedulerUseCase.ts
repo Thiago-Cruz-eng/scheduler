@@ -1,6 +1,6 @@
 import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/taskSchedulerRepository'
 import { type TaskScheduleInterface } from '../../domain/protocols/taskScheduleInterface'
-import { HttpResponse } from '../../presentation/helpers/httpResponse'
+import { HttpResponse } from '../../presentation/helpers/HttpResponse'
 import { type BaseUseCase } from '../../infra/base/baseUseCase'
 
 export class GetTaskSchedulerUseCase implements BaseUseCase {

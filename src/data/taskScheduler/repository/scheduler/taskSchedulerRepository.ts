@@ -55,12 +55,4 @@ export default class TaskSchedulerRepository implements TaskScheduleInterface {
       }
     })
   }
-
-  getFilterSchedulerByDone (): object {
-    return prisma.schedule.findMany({
-      where: {
-        done: false
-      }
-    })
-  }
 }
