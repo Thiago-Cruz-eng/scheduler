@@ -83,11 +83,7 @@ export const deleteSchedule = async (request: FastifyRequest, reply: FastifyRepl
   }
 }
 
-export const healthCheck = async (request: FastifyRequest, reply: FastifyReply): Promise<object> => {
-  try {
-    return await reply.send('Running')
-  } catch (error) {
-    console.error(error)
-    return await reply.code(500).send(HttpResponse.serverError)
-  }
+export const healthCheck = async (name: string): Promise<string> => {
+  console.log('entrei')
+  return await new Promise((resolve, reject) => { resolve(`Hello ${name}`) })
 }
