@@ -2,7 +2,7 @@ export interface TaskSchedulerResponse {
   id: string
   name: string
   description: string
-  dateSchedule: Date,
+  dateSchedule: Date
   done: boolean
   deleted: boolean
 }

@@ -2,6 +2,7 @@ import fastify from 'fastify'
 import { route } from './src/presentation/routes/routes'
 import SetupCronJobs from './src/presentation/jobs/worker'
 import TaskSchedulerRepository from './src/data/taskScheduler/repository/scheduler/taskSchedulerRepository'
+import { HttpRequest } from './src/presentation/axios/HttpRequest'
 
 const server = fastify()
 
@@ -13,7 +14,7 @@ const start = async (): Promise<any> => {
       console.error(err)
       process.exit(1)
     }
-    const cron = new SetupCronJobs(new TaskSchedulerRepository())
+    const cron = new SetupCronJobs(new TaskSchedulerRepository(), new HttpRequest())
     cron.worker()
     console.log(`Server listening at ${address}`)
   })
