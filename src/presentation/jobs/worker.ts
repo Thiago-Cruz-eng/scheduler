@@ -1,8 +1,8 @@
 import cron from 'node-cron'
-import { type TaskScheduleInterface } from '../../domain/protocols/taskScheduleInterface'
-import { type TaskSchedulerResponse } from '../protocols/response/TaskSchedulerResponse'
+import { type TaskScheduleInterface } from '../../domain/protocols/TaskScheduleInterface'
 import { CronExpression } from '../enum/cronEvent'
 import { type AxiosHttpRequest } from '../protocols/request/AxiosHttpRequest'
+import { type TaskSchedulerResponse } from '../protocols/response/TaskSchedulerResponse'
 
 export default class SetupCronJobs {
   private readonly repository: TaskScheduleInterface
@@ -17,8 +17,9 @@ export default class SetupCronJobs {
       cron.schedule(CronExpression.EVERY_15_SECONDS, async () => {
         const isDate = await this.repository.getFilterSchedulerByDate()
         let isValidByDate: TaskSchedulerResponse
+        if (isDate.length !== 0) {
+          console.log(isDate)
 
-        if (isDate && !isDate[0].done && !isDate[0].deleted) {
           for (isValidByDate of isDate) {
             if (!isValidByDate.done && !isValidByDate.deleted) {
               const boredApiResponse = await this.boredApi.boredNeverMore()

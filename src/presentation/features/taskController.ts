@@ -1,10 +1,10 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { CreateTaskSchedulerUseCase } from '../../domain/features/createTaskSchedulerUseCase'
+import { CreateTaskSchedulerUseCase } from '../../domain/features/CreateTaskSchedulerUseCase'
 import { HttpResponse } from '../helpers/HttpResponse'
-import { GetTaskSchedulerUseCase } from '../../domain/features/getTaskSchedulerUseCase'
-import { UpdateTaskSchedulerUseCase } from '../../domain/features/updateTaskSchedulerUseCase'
-import { DeleteTaskSchedulerUseCase } from '../../domain/features/deleteTaskSchedulerUseCase'
+import { GetTaskSchedulerUseCase } from '../../domain/features/GetTaskSchedulerUseCase'
+import { UpdateTaskSchedulerUseCase } from '../../domain/features/UpdateTaskSchedulerUseCase'
+import { DeleteTaskSchedulerUseCase } from '../../domain/features/DeleteTaskSchedulerUseCase'
 
 const createScheduleSchema = z.object({
   name: z.string({

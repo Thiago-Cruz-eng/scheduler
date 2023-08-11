@@ -1,9 +1,9 @@
-import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/taskSchedulerRepository'
-import { type TaskScheduleData } from '../../domain/models/taskScheduleData'
-import { type TaskScheduleInterface } from '../../domain/protocols/taskScheduleInterface'
+import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/TaskSchedulerRepository'
+import { type TaskScheduleData } from '../models/TaskScheduleData'
+import { type TaskScheduleInterface } from '../protocols/TaskScheduleInterface'
 import { HttpResponse } from '../../presentation/helpers/HttpResponse'
 import { MissingParamError } from '../../presentation/helpers/MissingParamError'
-import { type BaseUseCase } from '../../infra/base/baseUseCase'
+import { type BaseUseCase } from '../../infra/base/BaseUseCase'
 import { MissingBodyError } from '../../presentation/helpers/MissingBodyError'
 
 export class UpdateTaskSchedulerUseCase implements BaseUseCase {

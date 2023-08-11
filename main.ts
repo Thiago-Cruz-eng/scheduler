@@ -1,7 +1,7 @@
 import fastify from 'fastify'
 import { route } from './src/presentation/routes/routes'
 import SetupCronJobs from './src/presentation/jobs/worker'
-import TaskSchedulerRepository from './src/data/taskScheduler/repository/scheduler/taskSchedulerRepository'
+import TaskSchedulerRepository from './src/data/taskScheduler/repository/scheduler/TaskSchedulerRepository'
 import { HttpRequest } from './src/presentation/axios/HttpRequest'
 
 const server = fastify()

@@ -1,9 +1,9 @@
 import { MissingParamError } from '../../presentation/helpers/MissingParamError'
-import { type TaskScheduleData } from '../../domain/models/taskScheduleData'
-import { type TaskScheduleInterface } from '../../domain/protocols/taskScheduleInterface'
-import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/taskSchedulerRepository'
 import { HttpResponse } from '../../presentation/helpers/HttpResponse'
-import { type BaseUseCase } from '../../infra/base/baseUseCase'
+import { type BaseUseCase } from '../../infra/base/BaseUseCase'
+import { type TaskScheduleData } from '../models/TaskScheduleData'
+import { type TaskScheduleInterface } from '../protocols/TaskScheduleInterface'
+import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/TaskSchedulerRepository'
 
 export class CreateTaskSchedulerUseCase implements BaseUseCase {
   private readonly payload: TaskScheduleData

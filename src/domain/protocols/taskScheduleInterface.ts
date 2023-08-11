@@ -1,4 +1,4 @@
-import { type TaskScheduleData } from '../../domain/models/taskScheduleData'
+import { type TaskScheduleData } from '../models/TaskScheduleData'
 export interface TaskScheduleInterface {
   saveSchedule(schedule: TaskScheduleData): object
   getAllSchedule(): object

@@ -1,6 +1,6 @@
-import { type TaskScheduleData } from '../../../../domain/models/taskScheduleData'
 import { prisma } from '../../../../../prisma/prisma'
-import { type TaskScheduleInterface } from '../../../../domain/protocols/taskScheduleInterface'
+import { type TaskScheduleData } from '../../../../domain/models/TaskScheduleData'
+import { type TaskScheduleInterface } from '../../../../domain/protocols/TaskScheduleInterface'
 
 export default class TaskSchedulerRepository implements TaskScheduleInterface {
   saveSchedule (schedule: TaskScheduleData): object {
@@ -51,7 +51,9 @@ export default class TaskSchedulerRepository implements TaskScheduleInterface {
       where: {
         dateSchedule: {
           lte: new Date()
-        }
+        },
+        done: false,
+        deleted: false
       }
     })
   }

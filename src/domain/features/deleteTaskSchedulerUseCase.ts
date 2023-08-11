@@ -1,8 +1,8 @@
-import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/taskSchedulerRepository'
-import { type TaskScheduleInterface } from '../../domain/protocols/taskScheduleInterface'
+import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/TaskSchedulerRepository'
+import { type TaskScheduleInterface } from '../protocols/TaskScheduleInterface'
 import { MissingParamError } from '../../presentation/helpers/MissingParamError'
 import { HttpResponse } from '../../presentation/helpers/HttpResponse'
-import { type BaseUseCase } from '../../infra/base/baseUseCase'
+import { type BaseUseCase } from '../../infra/base/BaseUseCase'
 
 export class DeleteTaskSchedulerUseCase implements BaseUseCase {
   private readonly payload: string
