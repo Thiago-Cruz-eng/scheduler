@@ -1,11 +1,16 @@
 import { type FastifyReply, type FastifyPluginCallback, type FastifyRequest } from 'fastify'
 import * as controller from '../features/taskController'
 import { HttpResponse } from '../helpers/HttpResponse'
+import { type TaskSchedulerResponse } from '../protocols/response/TaskSchedulerResponse'
+import { TaskSchedulerMapper } from '../mapper/TaskSchedulerMapper'
 
-export const route: FastifyPluginCallback = (fastify, opts, done) => {
-  fastify.post('/schedule', async (request: FastifyRequest, reply: FastifyReply) => {
+export const route: FastifyPluginCallback = (server, opts, done) => {
+  server.post('/schedule', async (request: FastifyRequest, reply: FastifyReply): Promise<TaskSchedulerResponse> => {
     try {
-      const body = Object(request.body)
+      const requestMapper = new TaskSchedulerMapper()
+      const body = requestMapper.dataToModel(Object(request.body))
+      console.log(body)
+
       const createdSchedule = await controller.postSchedule(body)
 
       return await reply.code(201).send(createdSchedule)
@@ -15,7 +20,7 @@ export const route: FastifyPluginCallback = (fastify, opts, done) => {
     }
   })
 
-  fastify.get('/schedule', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/schedule', async (request: FastifyRequest, reply: FastifyReply): Promise<TaskSchedulerResponse> => {
     try {
       const getAll = await controller.getAllSchedules()
       return await reply.code(201).send(getAll)
@@ -25,7 +30,7 @@ export const route: FastifyPluginCallback = (fastify, opts, done) => {
     }
   })
 
-  fastify.get('/schedules/:name', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/schedules/:name', async (request: FastifyRequest, reply: FastifyReply): Promise<TaskSchedulerResponse> => {
     try {
       const { name } = Object(request.params)
       const scheduleByName = await controller.getScheduleByName(name)
@@ -37,10 +42,11 @@ export const route: FastifyPluginCallback = (fastify, opts, done) => {
     }
   })
 
-  fastify.put('/schedule/:id', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.put('/schedule/:id', async (request: FastifyRequest, reply: FastifyReply): Promise<TaskSchedulerResponse> => {
     try {
       const { id } = Object(request.params)
-      const body = Object(request.body)
+      const requestMapper = new TaskSchedulerMapper()
+      const body = requestMapper.dataToModel(Object(request.body))
       const updateSchedule = await controller.updateSchedule(id, body)
       return await reply.code(201).send(updateSchedule)
     } catch (error) {
@@ -49,7 +55,7 @@ export const route: FastifyPluginCallback = (fastify, opts, done) => {
     }
   })
 
-  fastify.delete('/schedule/:id', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.delete('/schedule/:id', async (request: FastifyRequest, reply: FastifyReply): Promise<TaskSchedulerResponse> => {
     try {
       const { id } = Object(request.params)
       return await reply.send(await controller.deleteSchedule(id))
@@ -59,7 +65,7 @@ export const route: FastifyPluginCallback = (fastify, opts, done) => {
     }
   })
 
-  fastify.get('/health/:name', async (request: FastifyRequest, reply: FastifyReply) => {
+  server.get('/health/:name', async (request: FastifyRequest, reply: FastifyReply): Promise<string> => {
     try {
       return await reply.send(await controller.healthCheck())
     } catch (error) {

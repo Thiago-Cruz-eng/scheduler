@@ -1,25 +1,17 @@
-import { z } from 'zod'
 import { CreateTaskSchedulerUseCase } from '../../domain/features/CreateTaskSchedulerUseCase'
 import { HttpResponse } from '../helpers/HttpResponse'
 import { GetTaskSchedulerUseCase } from '../../domain/features/GetTaskSchedulerUseCase'
 import { UpdateTaskSchedulerUseCase } from '../../domain/features/UpdateTaskSchedulerUseCase'
 import { DeleteTaskSchedulerUseCase } from '../../domain/features/DeleteTaskSchedulerUseCase'
+import { type TaskScheduleData } from '../../domain/models/TaskScheduleData'
+import { MissingParamError } from '../helpers/MissingParamError'
 
-const createScheduleSchema = z.object({
-  name: z.string({
-    required_error: 'name is required',
-    invalid_type_error: 'name have to be a string'
-  }),
-  description: z.string({
-    required_error: 'description is required',
-    invalid_type_error: 'description have to be a string'
-  })
-})
-
-export const postSchedule = async (bodyParams: object): Promise<object> => {
+export const postSchedule = async (bodyParams: TaskScheduleData): Promise<object> => {
   try {
-    const body = createScheduleSchema.parse(bodyParams)
-    const createdSchedule = new CreateTaskSchedulerUseCase(body)
+    if (!bodyParams.description || !bodyParams.name) {
+      return new MissingParamError('name or description')
+    }
+    const createdSchedule = new CreateTaskSchedulerUseCase(bodyParams)
     return await createdSchedule.execute()
   } catch (error) {
     console.error(error)
@@ -47,10 +39,12 @@ export const getScheduleByName = async (name: string): Promise<object> => {
   }
 }
 
-export const updateSchedule = async (id: string, bodyRequest: object): Promise<object> => {
+export const updateSchedule = async (id: string, bodyRequest: TaskScheduleData): Promise<object> => {
   try {
-    const body = createScheduleSchema.parse(bodyRequest)
-    const updateSchedule = new UpdateTaskSchedulerUseCase(id, body)
+    if (!id || !bodyRequest.name || !bodyRequest.description) {
+      return new MissingParamError('id query, name or description')
+    }
+    const updateSchedule = new UpdateTaskSchedulerUseCase(id, bodyRequest)
     return await updateSchedule.execute()
   } catch (error) {
     console.error(error)
