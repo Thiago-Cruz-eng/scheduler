@@ -19,16 +19,15 @@ const createScheduleSchema = z.object({
 export const postSchedule = async (bodyParams: object): Promise<object> => {
   try {
     const body = createScheduleSchema.parse(bodyParams)
-    const create = new CreateTaskSchedulerUseCase(body)
-
-    return await create.execute()
+    const createdSchedule = new CreateTaskSchedulerUseCase(body)
+    return await createdSchedule.execute()
   } catch (error) {
     console.error(error)
     return HttpResponse.serverError
   }
 }
 
-export const getAllSchedules = async (): Promise<object> => {
+export const getAllSchedules = async (): Promise<object[] | object> => {
   try {
     const getAll = new GetTaskSchedulerUseCase()
     return await getAll.execute()

@@ -6,7 +6,8 @@ export const route: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.post('/schedule', async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       const body = Object(request.body)
-      const createdSchedule = controller.postSchedule(body)
+      const createdSchedule = await controller.postSchedule(body)
+
       return await reply.code(201).send(createdSchedule)
     } catch (error) {
       console.error(error)
@@ -16,7 +17,7 @@ export const route: FastifyPluginCallback = (fastify, opts, done) => {
 
   fastify.get('/schedule', async (request: FastifyRequest, reply: FastifyReply) => {
     try {
-      const getAll = controller.getAllSchedules()
+      const getAll = await controller.getAllSchedules()
       return await reply.code(201).send(getAll)
     } catch (error) {
       console.error(error)
@@ -27,7 +28,8 @@ export const route: FastifyPluginCallback = (fastify, opts, done) => {
   fastify.get('/schedules/:name', async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       const { name } = Object(request.params)
-      const scheduleByName = controller.getScheduleByName(name)
+      const scheduleByName = await controller.getScheduleByName(name)
+
       return await reply.code(201).send(scheduleByName)
     } catch (error) {
       console.error(error)
@@ -39,7 +41,7 @@ export const route: FastifyPluginCallback = (fastify, opts, done) => {
     try {
       const { id } = Object(request.params)
       const body = Object(request.body)
-      const updateSchedule = controller.updateSchedule(id, body)
+      const updateSchedule = await controller.updateSchedule(id, body)
       return await reply.code(201).send(updateSchedule)
     } catch (error) {
       console.error(error)

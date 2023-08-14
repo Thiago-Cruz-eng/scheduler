@@ -18,10 +18,11 @@ export default class TaskSchedulerRepository implements TaskScheduleInterface {
   }
 
   getScheduleByName (name: string): object {
-    console.log(name)
     return prisma.schedule.findMany({
       where: {
-        name
+        name: {
+          contains: name
+        }
       }
     })
   }
