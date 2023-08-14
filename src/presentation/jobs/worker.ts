@@ -6,29 +6,25 @@ import { type TaskSchedulerResponse } from '../protocols/response/TaskSchedulerR
 
 export default class SetupCronJobs {
   private readonly repository: TaskScheduleInterface
-  private readonly boredApi: AxiosHttpRequest
-  constructor (repository: TaskScheduleInterface, boredApi: AxiosHttpRequest) {
+  private readonly api: AxiosHttpRequest
+  constructor (repository: TaskScheduleInterface, api: AxiosHttpRequest) {
     this.repository = repository
-    this.boredApi = boredApi
+    this.api = api
   }
 
   worker (): any {
     try {
       cron.schedule(CronExpression.EVERY_15_SECONDS, async () => {
-        const isDate = await this.repository.getFilterSchedulerByDate()
+        const isValidToBeDone = await this.repository.getFilterSchedulerByDate()
         let isValidByDate: TaskSchedulerResponse
-        if (isDate.length !== 0) {
-          console.log(isDate)
+        if (isValidToBeDone.length !== 0) {
+          console.log(isValidToBeDone)
 
-          for (isValidByDate of isDate) {
+          for (isValidByDate of isValidToBeDone) {
             if (!isValidByDate.done && !isValidByDate.deleted) {
-              const boredApiResponse = await this.boredApi.boredNeverMore()
+              const boredApiResponse = await this.api.boredNeverMore()
               const dataIndoDataBase = await this.repository.updateApiReturn(isValidByDate.id, boredApiResponse.data.activity, new Date())
               console.log(dataIndoDataBase)
-            } else {
-              return {
-                statusSchedule: 'no task schedule pending'
-              }
             }
           }
         } else {
