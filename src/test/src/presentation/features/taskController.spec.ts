@@ -22,6 +22,9 @@ describe('taskController', () => {
   describe('POST', () => {
     it('Should return 400 if no name is provided', async () => {
       const bodyParams = scheduler.mock.mockRequestWithoutName
+      CreateUseCaseMock.mockImplementation((): any => ({
+        execute: jest.fn(async () => await Promise.resolve(HttpResponse.badRequest('name or description')))
+      }))
 
       const sut = await controller.postSchedule(bodyParams)
       expect(sut).toEqual(HttpResponse.badRequest('name or description'))
@@ -29,6 +32,9 @@ describe('taskController', () => {
 
     it('Should return 400 if no description is provided', async () => {
       const bodyParams = scheduler.mock.mockRequestWithoutDescription
+      CreateUseCaseMock.mockImplementation((): any => ({
+        execute: jest.fn(async () => await Promise.resolve(HttpResponse.badRequest('name or description')))
+      }))
 
       const sut = await controller.postSchedule(bodyParams)
       expect(sut).toEqual(HttpResponse.badRequest('name or description'))
@@ -36,7 +42,6 @@ describe('taskController', () => {
 
     it('Should create a schedule if name and description is provided', async () => {
       const bodyParams = scheduler.mock.mockRequest
-
       CreateUseCaseMock.mockImplementation((): any => ({
         execute: jest.fn(async () => await Promise.resolve('New Schedule'))
       }))
