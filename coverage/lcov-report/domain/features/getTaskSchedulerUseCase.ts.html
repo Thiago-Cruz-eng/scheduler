@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for domain/features/getTaskSchedulerUseCase.ts</title>
+    <title>Code coverage report for domain/features/GetTaskSchedulerUseCase.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">domain/features</a> getTaskSchedulerUseCase.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">domain/features</a> GetTaskSchedulerUseCase.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -86,7 +86,8 @@
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -109,37 +110,39 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import TaskSchedulerRepository  from "../../data/taskScheduler/repository/scheduler/taskSchedulerRepository";</span></span></span>
-<span class="cstat-no" title="statement not covered" >import { TaskScheduleInterface } from "../../domain/protocols/taskScheduleInterface";</span>
-<span class="cstat-no" title="statement not covered" >import { HttpResponse } from "../../presentation/helpers/httpResponse";</span>
-<span class="cstat-no" title="statement not covered" >import { BaseUseCase } from "../../infra/base/baseUseCase";</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/TaskSchedulerRepository'</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { type TaskScheduleInterface } from '../protocols/TaskScheduleInterface'</span>
+<span class="cstat-no" title="statement not covered" >import { HttpResponse } from '../../presentation/helpers/HttpResponse'</span>
+<span class="cstat-no" title="statement not covered" >import { type BaseUseCase } from '../../infra/base/BaseUseCase'</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >export class GetTaskSchedulerUseCase implements BaseUseCase {</span>
-<span class="cstat-no" title="statement not covered" >    private payload?: string</span>
-<span class="cstat-no" title="statement not covered" >    private repository: TaskScheduleInterface = new TaskSchedulerRepository()</span>
-<span class="cstat-no" title="statement not covered" >    constructor(payload?: string) {</span>
-<span class="cstat-no" title="statement not covered" >        this.payload = payload;</span>
+<span class="cstat-no" title="statement not covered" >  private readonly payload?: string</span>
+<span class="cstat-no" title="statement not covered" >  private readonly repository: TaskScheduleInterface = new TaskSchedulerRepository()</span>
+<span class="cstat-no" title="statement not covered" >  constructor (payload?: string) {</span>
+<span class="cstat-no" title="statement not covered" >    this.payload = payload</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  async execute (): Promise&lt;any&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.payload) {</span>
+<span class="cstat-no" title="statement not covered" >      const schedule = await this.repository.getScheduleByName(this.payload)</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      if (!schedule) return HttpResponse.notFound('no schedule found')</span>
+<span class="cstat-no" title="statement not covered" >      return HttpResponse.goodRequest(schedule)</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    async execute(): Promise&lt;any&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        if (this.payload) {</span>
-<span class="cstat-no" title="statement not covered" >            const schedule = await this.repository.getScheduleByName(this.payload)</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >            if (!schedule) return HttpResponse.notFound('no schedule found')</span>
-<span class="cstat-no" title="statement not covered" >            return HttpResponse.goodRequest(schedule)</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        const schedule = await this.repository.getAllSchedule()</span>
-<span class="cstat-no" title="statement not covered" >        return HttpResponse.goodRequest(schedule)</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >}</span></pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" >    const schedule = await this.repository.getAllSchedule()</span>
+<span class="cstat-no" title="statement not covered" >    return HttpResponse.goodRequest(schedule)</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-08-11T12:40:44.537Z
+                at 2023-08-14T14:29:07.169Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for data/taskScheduler/repository/scheduler/taskSchedulerRepository.ts</title>
+    <title>Code coverage report for data/taskScheduler/repository/scheduler/TaskSchedulerRepository.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../../prettify.css" />
     <link rel="stylesheet" href="../../../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">data/taskScheduler/repository/scheduler</a> taskSchedulerRepository.ts</h1>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">data/taskScheduler/repository/scheduler</a> TaskSchedulerRepository.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/66</span>
+                <span class='fraction'>0/74</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/66</span>
+                <span class='fraction'>0/74</span>
             </div>
         
             
@@ -130,7 +130,14 @@
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -196,74 +203,88 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { TaskScheduleData } from '../../../../domain/models/taskScheduleData'</span></span></span>
-<span class="cstat-no" title="statement not covered" >import { prisma } from '../../../../../prisma/prisma'</span>
-<span class="cstat-no" title="statement not covered" >import { TaskScheduleInterface } from '../../../../domain/protocols/taskScheduleInterface'</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { prisma } from '../../../../../prisma/prisma'</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { type TaskScheduleData } from '../../../../domain/models/TaskScheduleData'</span>
+<span class="cstat-no" title="statement not covered" >import { type TaskScheduleInterface } from '../../../../domain/protocols/TaskScheduleInterface'</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >export default class TaskSchedulerRepository implements TaskScheduleInterface {</span>
-<span class="cstat-no" title="statement not covered" >    saveSchedule(schedule: TaskScheduleData): any {</span>
-<span class="cstat-no" title="statement not covered" >        return prisma.schedule.create({</span>
-<span class="cstat-no" title="statement not covered" >            data: schedule</span>
-<span class="cstat-no" title="statement not covered" >        })</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >  saveSchedule (schedule: TaskScheduleData): object {</span>
+<span class="cstat-no" title="statement not covered" >    return prisma.schedule.create({</span>
+<span class="cstat-no" title="statement not covered" >      data: schedule</span>
+<span class="cstat-no" title="statement not covered" >    })</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    getAllSchedule(): any {</span>
-<span class="cstat-no" title="statement not covered" >        return prisma.schedule.findMany({</span>
-<span class="cstat-no" title="statement not covered" >            where: {</span>
-<span class="cstat-no" title="statement not covered" >                deleted: false</span>
-<span class="cstat-no" title="statement not covered" >            }</span>
-<span class="cstat-no" title="statement not covered" >        })</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >    </span>
-<span class="cstat-no" title="statement not covered" >    getScheduleByName(name: string): any {</span>
-<span class="cstat-no" title="statement not covered" >        console.log(name)</span>
-<span class="cstat-no" title="statement not covered" >        return prisma.schedule.findMany({</span>
-<span class="cstat-no" title="statement not covered" >            where: {</span>
-<span class="cstat-no" title="statement not covered" >                name: name</span>
-<span class="cstat-no" title="statement not covered" >            }</span>
-<span class="cstat-no" title="statement not covered" >        })</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >  getAllSchedule (): object {</span>
+<span class="cstat-no" title="statement not covered" >    return prisma.schedule.findMany({</span>
+<span class="cstat-no" title="statement not covered" >      where: {</span>
+<span class="cstat-no" title="statement not covered" >        deleted: false</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    })</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    updateSchedule(id: string, schedule: TaskScheduleData): any {</span>
-<span class="cstat-no" title="statement not covered" >        return prisma.schedule.update({</span>
-<span class="cstat-no" title="statement not covered" >            where: {</span>
-<span class="cstat-no" title="statement not covered" >                id</span>
-<span class="cstat-no" title="statement not covered" >            },</span>
-<span class="cstat-no" title="statement not covered" >            data: schedule</span>
-<span class="cstat-no" title="statement not covered" >        })</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >  getScheduleByName (name: string): object {</span>
+<span class="cstat-no" title="statement not covered" >    return prisma.schedule.findMany({</span>
+<span class="cstat-no" title="statement not covered" >      where: {</span>
+<span class="cstat-no" title="statement not covered" >        name: {</span>
+<span class="cstat-no" title="statement not covered" >          contains: name</span>
+<span class="cstat-no" title="statement not covered" >        }</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    })</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    deleteSchedule(id: string): any {</span>
-<span class="cstat-no" title="statement not covered" >        return prisma.schedule.update({</span>
-<span class="cstat-no" title="statement not covered" >            where: {</span>
-<span class="cstat-no" title="statement not covered" >                id</span>
-<span class="cstat-no" title="statement not covered" >              },</span>
-<span class="cstat-no" title="statement not covered" >              data: {</span>
-<span class="cstat-no" title="statement not covered" >                deleted: true</span>
-<span class="cstat-no" title="statement not covered" >              }</span>
-<span class="cstat-no" title="statement not covered" >        })</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >  updateSchedule (id: string, schedule: TaskScheduleData): object {</span>
+<span class="cstat-no" title="statement not covered" >    return prisma.schedule.update({</span>
+<span class="cstat-no" title="statement not covered" >      where: {</span>
+<span class="cstat-no" title="statement not covered" >        id</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      data: schedule</span>
+<span class="cstat-no" title="statement not covered" >    })</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    getFilterSchedulerByDate() {</span>
-<span class="cstat-no" title="statement not covered" >        return prisma.schedule.findMany({</span>
-<span class="cstat-no" title="statement not covered" >            where: {</span>
-<span class="cstat-no" title="statement not covered" >                dateSchedule: {</span>
-<span class="cstat-no" title="statement not covered" >                    lte: new Date()</span>
-<span class="cstat-no" title="statement not covered" >                }</span>
-<span class="cstat-no" title="statement not covered" >            }</span>
-<span class="cstat-no" title="statement not covered" >        })</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >  deleteSchedule (id: string): object {</span>
+<span class="cstat-no" title="statement not covered" >    return prisma.schedule.update({</span>
+<span class="cstat-no" title="statement not covered" >      where: {</span>
+<span class="cstat-no" title="statement not covered" >        id</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      data: {</span>
+<span class="cstat-no" title="statement not covered" >        deleted: true</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    })</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    getFilterSchedulerByDone() {</span>
-<span class="cstat-no" title="statement not covered" >        return prisma.schedule.findMany({</span>
-<span class="cstat-no" title="statement not covered" >            where: {</span>
-<span class="cstat-no" title="statement not covered" >                done: false</span>
-<span class="cstat-no" title="statement not covered" >            }</span>
-<span class="cstat-no" title="statement not covered" >        })</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >  getFilterSchedulerByDate (): object {</span>
+<span class="cstat-no" title="statement not covered" >    return prisma.schedule.findMany({</span>
+<span class="cstat-no" title="statement not covered" >      where: {</span>
+<span class="cstat-no" title="statement not covered" >        dateSchedule: {</span>
+<span class="cstat-no" title="statement not covered" >          lte: new Date()</span>
+<span class="cstat-no" title="statement not covered" >        },</span>
+<span class="cstat-no" title="statement not covered" >        done: false,</span>
+<span class="cstat-no" title="statement not covered" >        deleted: false</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    })</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  updateApiReturn (id: string, returnOf: string, date: Date): object {</span>
+<span class="cstat-no" title="statement not covered" >    return prisma.schedule.update({</span>
+<span class="cstat-no" title="statement not covered" >      where: {</span>
+<span class="cstat-no" title="statement not covered" >        id</span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >      data: {</span>
+<span class="cstat-no" title="statement not covered" >        done: true,</span>
+<span class="cstat-no" title="statement not covered" >        apiReturn: returnOf,</span>
+<span class="cstat-no" title="statement not covered" >        dateApiReturn: date</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >    })</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" >}</span>
-&nbsp;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -271,7 +292,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-08-11T12:40:44.537Z
+                at 2023-08-14T14:29:07.169Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
