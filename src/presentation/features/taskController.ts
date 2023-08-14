@@ -9,7 +9,7 @@ import { MissingParamError } from '../helpers/MissingParamError'
 export const postSchedule = async (bodyParams: TaskScheduleData): Promise<object> => {
   try {
     if (!bodyParams.description || !bodyParams.name) {
-      return new MissingParamError('name or description')
+      return HttpResponse.badRequest('name or description')
     }
     const createdSchedule = new CreateTaskSchedulerUseCase(bodyParams)
     return await createdSchedule.execute()

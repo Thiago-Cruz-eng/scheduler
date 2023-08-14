@@ -1,22 +1,25 @@
 import * as scheduler from '../../../mock/schedule'
+import * as controller from '../../../../presentation/features/taskController'
+import { HttpResponse } from '../../../../presentation/helpers/HttpResponse'
 
 describe('taskController', () => {
-  const mockPrisma = {
-    routes: {
-      saveSchedule: jest.fn(),
-      getAllSchedule: jest.fn(),
-      getScheduleByName: jest.fn(),
-      updateSchedule: jest.fn(),
-      deleteSchedule: jest.fn(),
-      getFilterSchedulerByDate: jest.fn(),
-      updateApiReturn: jest.fn()
-    }
-  }
-
   describe('POST', () => {
-    it('postSchedule', () => {
-      const newSchedule = scheduler.data.initialMockPost
-      expect(1).toBe(1)
+    it('Should return 400 if no name is provided', async () => {
+      const httpRequest = {
+        name: '',
+        description: 'abc'
+      }
+      const sut = await controller.postSchedule(httpRequest)
+      expect(sut).toEqual(HttpResponse.badRequest('name or description'))
+    })
+
+    it('Should return 400 if no description is provided', async () => {
+      const httpRequest = {
+        name: 'abc',
+        description: ''
+      }
+      const sut = await controller.postSchedule(httpRequest)
+      expect(sut).toEqual(HttpResponse.badRequest('name or description'))
     })
   })
 
