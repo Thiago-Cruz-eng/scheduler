@@ -13,6 +13,8 @@ export class CreateTaskSchedulerUseCase implements BaseUseCase {
   }
 
   async execute (): Promise<any> {
+    console.log(this.payload)
+
     if (!this.payload.name) {
       return new MissingParamError('name')
     }
