@@ -9,8 +9,6 @@ export const route: FastifyPluginCallback = (server, opts, done) => {
     try {
       const requestMapper = new TaskSchedulerMapper()
       const body = requestMapper.dataToModel(Object(request.body))
-      console.log(body)
-
       const createdSchedule = await controller.postSchedule(body)
 
       return await reply.code(201).send(createdSchedule)
