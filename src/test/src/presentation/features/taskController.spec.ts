@@ -1,17 +1,11 @@
 import * as scheduler from '../../../mock/schedule'
 import * as controller from '../../../../presentation/features/taskController'
 import { CreateTaskSchedulerUseCase } from '../../../../domain/features/CreateTaskSchedulerUseCase'
+import { GetTaskSchedulerUseCase } from '../../../../domain/features/GetTaskSchedulerUseCase'
+import { DeleteTaskSchedulerUseCase } from '../../../../domain/features/DeleteTaskSchedulerUseCase'
+import { UpdateTaskSchedulerUseCase } from '../../../../domain/features/UpdateTaskSchedulerUseCase'
 import { HttpResponse } from '../../../../presentation/helpers/HttpResponse'
-import { MissingParamError } from '../../../../presentation/helpers/MissingParamError'
-/*
-import { HttpResponse } from '../../../../presentation/helpers/HttpResponse'
-import { TaskSchedulerResponse } from '../../../../presentation/protocols/response/TaskSchedulerResponse'
-import { GetTaskSchedulerUseCase } from '../../domain/features/GetTaskSchedulerUseCase'
-import { UpdateTaskSchedulerUseCase } from '../../domain/features/UpdateTaskSchedulerUseCase'
-import { DeleteTaskSchedulerUseCase } from '../../domain/features/DeleteTaskSchedulerUseCase'
-import { MissingParamError } from '../helpers/MissingParamError'
-import { type TaskScheduleData } from '../../../../domain/models/TaskScheduleData'
-*/
+
 jest.mock('../../../../domain/features/CreateTaskSchedulerUseCase')
 jest.mock('../../../../domain/features/GetTaskSchedulerUseCase')
 jest.mock('../../../../domain/features/UpdateTaskSchedulerUseCase')
@@ -20,29 +14,28 @@ jest.mock('../../../../presentation/helpers/HttpResponse')
 jest.mock('../../../../presentation/helpers/MissingParamError')
 
 const CreateUseCaseMock = CreateTaskSchedulerUseCase as jest.Mock<CreateTaskSchedulerUseCase>
+const GetAllUseCaseMock = GetTaskSchedulerUseCase as jest.Mock<GetTaskSchedulerUseCase>
+const DeleteUseCaseMock = DeleteTaskSchedulerUseCase as jest.Mock<DeleteTaskSchedulerUseCase>
+const UpdateUseCaseMock = UpdateTaskSchedulerUseCase as jest.Mock<UpdateTaskSchedulerUseCase>
 
 describe('taskController', () => {
   describe('POST', () => {
     it('Should return 400 if no name is provided', async () => {
-      const httpRequest = {
-        name: '',
-        description: 'abc'
-      }
-      const sut = await controller.postSchedule(httpRequest)
+      const bodyParams = scheduler.mock.mockRequestWithoutName
+
+      const sut = await controller.postSchedule(bodyParams)
       expect(sut).toEqual(HttpResponse.badRequest('name or description'))
     })
 
     it('Should return 400 if no description is provided', async () => {
-      const httpRequest = {
-        name: 'abc',
-        description: ''
-      }
-      const sut = await controller.postSchedule(httpRequest)
+      const bodyParams = scheduler.mock.mockRequestWithoutDescription
+
+      const sut = await controller.postSchedule(bodyParams)
       expect(sut).toEqual(HttpResponse.badRequest('name or description'))
     })
 
     it('Should create a schedule if name and description is provided', async () => {
-      const bodyParams = scheduler.data.mockRequest
+      const bodyParams = scheduler.mock.mockRequest
 
       CreateUseCaseMock.mockImplementation((): any => ({
         execute: jest.fn(async () => await Promise.resolve('New Schedule'))

@@ -1,5 +1,15 @@
-export const data = {
+export const mock = {
   mockRequest: {
+    name: 'abc',
+    description: 'cba'
+  },
+
+  mockRequestWithoutName: {
+    name: '',
+    description: 'abc'
+  },
+
+  mockRequestWithoutDescription: {
     name: 'abc',
     description: 'cba'
   },
