@@ -1,4 +1,9 @@
 export const data = {
+  mockRequest: {
+    name: 'abc',
+    description: 'cba'
+  },
+
   initialMockPost: {
     id: '906e3973-24d8-4ed6-b2c0-d2dfcd09db67',
     name: 'mock01',

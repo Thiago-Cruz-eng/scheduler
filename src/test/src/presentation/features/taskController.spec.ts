@@ -1,6 +1,25 @@
 import * as scheduler from '../../../mock/schedule'
 import * as controller from '../../../../presentation/features/taskController'
+import { CreateTaskSchedulerUseCase } from '../../../../domain/features/CreateTaskSchedulerUseCase'
 import { HttpResponse } from '../../../../presentation/helpers/HttpResponse'
+import { MissingParamError } from '../../../../presentation/helpers/MissingParamError'
+/*
+import { HttpResponse } from '../../../../presentation/helpers/HttpResponse'
+import { TaskSchedulerResponse } from '../../../../presentation/protocols/response/TaskSchedulerResponse'
+import { GetTaskSchedulerUseCase } from '../../domain/features/GetTaskSchedulerUseCase'
+import { UpdateTaskSchedulerUseCase } from '../../domain/features/UpdateTaskSchedulerUseCase'
+import { DeleteTaskSchedulerUseCase } from '../../domain/features/DeleteTaskSchedulerUseCase'
+import { MissingParamError } from '../helpers/MissingParamError'
+import { type TaskScheduleData } from '../../../../domain/models/TaskScheduleData'
+*/
+jest.mock('../../../../domain/features/CreateTaskSchedulerUseCase')
+jest.mock('../../../../domain/features/GetTaskSchedulerUseCase')
+jest.mock('../../../../domain/features/UpdateTaskSchedulerUseCase')
+jest.mock('../../../../domain/features/DeleteTaskSchedulerUseCase')
+jest.mock('../../../../presentation/helpers/HttpResponse')
+jest.mock('../../../../presentation/helpers/MissingParamError')
+
+const CreateUseCaseMock = CreateTaskSchedulerUseCase as jest.Mock<CreateTaskSchedulerUseCase>
 
 describe('taskController', () => {
   describe('POST', () => {
@@ -20,6 +39,17 @@ describe('taskController', () => {
       }
       const sut = await controller.postSchedule(httpRequest)
       expect(sut).toEqual(HttpResponse.badRequest('name or description'))
+    })
+
+    it('Should create a schedule if name and description is provided', async () => {
+      const bodyParams = scheduler.data.mockRequest
+
+      CreateUseCaseMock.mockImplementation((): any => ({
+        execute: jest.fn(async () => await Promise.resolve('New Schedule'))
+      }))
+
+      const result = await controller.postSchedule(bodyParams)
+      expect(result).toBe('New Schedule')
     })
   })
 
