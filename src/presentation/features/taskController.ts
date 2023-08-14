@@ -1,4 +1,3 @@
-import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import { CreateTaskSchedulerUseCase } from '../../domain/features/CreateTaskSchedulerUseCase'
 import { HttpResponse } from '../helpers/HttpResponse'
@@ -17,73 +16,62 @@ const createScheduleSchema = z.object({
   })
 })
 
-export const postSchedule = async (request: FastifyRequest, reply: FastifyReply): Promise<object> => {
+export const postSchedule = async (bodyParams: object): Promise<object> => {
   try {
-    const body = createScheduleSchema.parse(request.body)
+    const body = createScheduleSchema.parse(bodyParams)
     const create = new CreateTaskSchedulerUseCase(body)
 
-    const newSchedule = await create.execute()
-
-    return await reply.code(201).send(newSchedule)
+    return await create.execute()
   } catch (error) {
     console.error(error)
-    return await reply.code(500).send(HttpResponse.serverError)
+    return HttpResponse.serverError
   }
 }
 
-export const getAllSchedules = async (request: FastifyRequest, reply: FastifyReply): Promise<object> => {
+export const getAllSchedules = async (): Promise<object> => {
   try {
     const getAll = new GetTaskSchedulerUseCase()
-
-    const allSchedules = await getAll.execute()
-    return await reply.code(201).send(allSchedules)
+    return await getAll.execute()
   } catch (error) {
     console.error(error)
-    return await reply.code(500).send(HttpResponse.serverError)
+    return HttpResponse.serverError
   }
 }
 
-export const getScheduleByName = async (request: FastifyRequest, reply: FastifyReply): Promise<object> => {
+export const getScheduleByName = async (name: string): Promise<object> => {
   try {
-    const { name } = Object(request.params)
     const getByName = new GetTaskSchedulerUseCase(name)
-
-    const allSchedulesByName = await getByName.execute()
-    return await reply.code(201).send(allSchedulesByName)
+    return await getByName.execute()
   } catch (error) {
     console.error(error)
-    return await reply.code(500).send(HttpResponse.serverError)
+    return HttpResponse.serverError
   }
 }
 
-export const updateSchedule = async (request: FastifyRequest, reply: FastifyReply): Promise<object> => {
+export const updateSchedule = async (id: string, bodyRequest: object): Promise<object> => {
   try {
-    const { id } = Object(request.params)
-    const body = createScheduleSchema.parse(request.body)
+    const body = createScheduleSchema.parse(bodyRequest)
     const updateSchedule = new UpdateTaskSchedulerUseCase(id, body)
-
-    const updatedSchedule = await updateSchedule.execute()
-    return await reply.code(201).send(updatedSchedule)
+    return await updateSchedule.execute()
   } catch (error) {
     console.error(error)
-    return await reply.code(500).send(HttpResponse.serverError)
+    return HttpResponse.serverError
   }
 }
 
-export const deleteSchedule = async (request: FastifyRequest, reply: FastifyReply): Promise<object> => {
+export const deleteSchedule = async (id: string): Promise<object> => {
   try {
-    const { id } = Object(request.params)
     const toDelete = new DeleteTaskSchedulerUseCase(id)
-    const deleted = await toDelete.execute()
-
-    return await reply.code(201).send(deleted)
+    return await toDelete.execute()
   } catch (error) {
-    console.error(error)
-    return await reply.code(500).send(HttpResponse.serverError)
+    return HttpResponse.serverError
   }
 }
 
-export const healthCheck = async (name: string): Promise<string> => {
-  console.log('entrei')
-  return await new Promise((resolve, reject) => { resolve(`Hello ${name}`) })
+export const healthCheck = async (): Promise<string | object> => {
+  try {
+    return await new Promise((resolve, reject) => { resolve('Running') })
+  } catch (error) {
+    return HttpResponse.serverError
+  }
 }

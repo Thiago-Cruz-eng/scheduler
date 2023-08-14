@@ -15,7 +15,6 @@ export class DeleteTaskSchedulerUseCase implements BaseUseCase {
     if (!this.payload) {
       return new MissingParamError('id')
     }
-
     const deletedSchedule = await this.repository.deleteSchedule(this.payload)
     return HttpResponse.goodRequest(deletedSchedule)
   }
