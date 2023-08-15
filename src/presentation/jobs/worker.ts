@@ -1,6 +1,6 @@
 import cron from 'node-cron'
 import { type TaskScheduleInterface } from '../../domain/protocols/TaskScheduleInterface'
-import { CronExpression } from '../enum/cronEvent'
+import { CronExpression } from '../enum/CronEvent'
 import { type AxiosHttpRequest } from '../protocols/request/AxiosHttpRequest'
 import { type TaskSchedulerResponse } from '../protocols/response/TaskSchedulerResponse'
 
