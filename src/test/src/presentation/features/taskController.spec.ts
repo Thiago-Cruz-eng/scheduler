@@ -103,10 +103,6 @@ describe('taskController', () => {
   describe('PUT', () => {
     it('Should return Missing param if any param is no provided', async () => {
       const scheduleRequest = scheduler.mock.mockRequest
-      UpdateUseCaseMock.mockImplementation((): any => ({
-        execute: jest.fn(async () =>
-          await Promise.resolve(new MissingParamError('id')))
-      }))
 
       const sut = await controller.updateSchedule('', scheduleRequest)
       expect(sut).toEqual(new MissingParamError('id query, name or description'))
