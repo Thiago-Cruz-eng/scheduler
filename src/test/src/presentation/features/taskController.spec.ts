@@ -151,8 +151,9 @@ describe('taskController', () => {
   })
 
   describe('GET HEALTH', () => {
-    it('healthCheck', () => {
-      expect(1).toBe(1)
+    it('Should return Running if server running', async () => {
+      const sut = await controller.healthCheck()
+      expect(sut).toEqual('Running')
     })
   })
 })
