@@ -1,4 +1,8 @@
 export const mock = {
+  mockParamsToGetByName: {
+    name: 'mock01'
+  },
+
   mockRequest: {
     name: 'abc',
     description: 'cba'

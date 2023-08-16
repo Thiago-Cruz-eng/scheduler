@@ -1,6 +1,7 @@
 import { CreateTaskSchedulerUseCase } from '../../domain/features/CreateTaskSchedulerUseCase'
 import { HttpResponse } from '../helpers/HttpResponse'
 import { GetTaskSchedulerUseCase } from '../../domain/features/GetTaskSchedulerUseCase'
+import { GetTaskSchedulerByNameUseCase } from '../../domain/features/GetTaskSchedulerByNameUseCase'
 import { UpdateTaskSchedulerUseCase } from '../../domain/features/UpdateTaskSchedulerUseCase'
 import { DeleteTaskSchedulerUseCase } from '../../domain/features/DeleteTaskSchedulerUseCase'
 import { type TaskScheduleData } from '../../domain/models/TaskScheduleData'
@@ -31,7 +32,7 @@ export const getAllSchedules = async (): Promise<object[] | object> => {
 
 export const getScheduleByName = async (name: string): Promise<object> => {
   try {
-    const getByName = new GetTaskSchedulerUseCase(name)
+    const getByName = new GetTaskSchedulerByNameUseCase(name)
     return await getByName.execute()
   } catch (error) {
     console.error(error)

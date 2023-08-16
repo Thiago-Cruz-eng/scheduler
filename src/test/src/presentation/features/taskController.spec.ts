@@ -2,12 +2,14 @@ import * as scheduler from '../../../mock/schedule'
 import * as controller from '../../../../presentation/features/taskController'
 import { CreateTaskSchedulerUseCase } from '../../../../domain/features/CreateTaskSchedulerUseCase'
 import { GetTaskSchedulerUseCase } from '../../../../domain/features/GetTaskSchedulerUseCase'
+import { GetTaskSchedulerByNameUseCase } from '../../../../domain/features/GetTaskSchedulerByNameUseCase'
 import { DeleteTaskSchedulerUseCase } from '../../../../domain/features/DeleteTaskSchedulerUseCase'
 import { UpdateTaskSchedulerUseCase } from '../../../../domain/features/UpdateTaskSchedulerUseCase'
 import { HttpResponse } from '../../../../presentation/helpers/HttpResponse'
 
 jest.mock('../../../../domain/features/CreateTaskSchedulerUseCase')
 jest.mock('../../../../domain/features/GetTaskSchedulerUseCase')
+jest.mock('../../../../domain/features/GetTaskSchedulerByNameUseCase')
 jest.mock('../../../../domain/features/UpdateTaskSchedulerUseCase')
 jest.mock('../../../../domain/features/DeleteTaskSchedulerUseCase')
 jest.mock('../../../../presentation/helpers/HttpResponse')
@@ -15,6 +17,7 @@ jest.mock('../../../../presentation/helpers/MissingParamError')
 
 const CreateUseCaseMock = CreateTaskSchedulerUseCase as jest.Mock<CreateTaskSchedulerUseCase>
 const GetAllUseCaseMock = GetTaskSchedulerUseCase as jest.Mock<GetTaskSchedulerUseCase>
+const GetByNameUseCaseMock = GetTaskSchedulerByNameUseCase as jest.Mock<GetTaskSchedulerByNameUseCase>
 const DeleteUseCaseMock = DeleteTaskSchedulerUseCase as jest.Mock<DeleteTaskSchedulerUseCase>
 const UpdateUseCaseMock = UpdateTaskSchedulerUseCase as jest.Mock<UpdateTaskSchedulerUseCase>
 
@@ -74,8 +77,17 @@ describe('taskController', () => {
   })
 
   describe('GET BY NAME', () => {
-    it('getScheduleByName', () => {
-      expect(1).toBe(1)
+    it('Should return a scheduler if name is provided', async () => {
+      const payload = scheduler.mock.mockParamsToGetByName.name
+      const schedule = scheduler.mock.afterDoneMockPost
+      GetByNameUseCaseMock.mockImplementation((): any => ({
+        execute: jest.fn(async () =>
+          await Promise.resolve(schedule))
+      }))
+
+      const sut = await controller.getScheduleByName(payload)
+
+      expect(sut).toEqual(schedule)
     })
   })
 

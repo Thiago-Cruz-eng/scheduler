@@ -3,7 +3,7 @@ import { type TaskScheduleInterface } from '../protocols/TaskScheduleInterface'
 import { HttpResponse } from '../../presentation/helpers/HttpResponse'
 import { type BaseUseCase } from '../../infra/base/BaseUseCase'
 
-export class GetTaskSchedulerUseCase implements BaseUseCase {
+export class GetTaskSchedulerByNameUseCase implements BaseUseCase {
   private readonly payload?: string
   private readonly repository: TaskScheduleInterface = new TaskSchedulerRepository()
   constructor (payload?: string) {
