@@ -1,13 +1,13 @@
-import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/TaskSchedulerRepository'
 import { type TaskScheduleInterface } from '../protocols/TaskScheduleInterface'
 import { HttpResponse } from '../../presentation/helpers/HttpResponse'
 import { type BaseUseCase } from '../../infra/base/BaseUseCase'
 
 export class GetTaskSchedulerByNameUseCase implements BaseUseCase {
   private readonly payload?: string
-  private readonly repository: TaskScheduleInterface = new TaskSchedulerRepository()
-  constructor (payload?: string) {
+  private readonly repository: TaskScheduleInterface
+  constructor (repository: TaskScheduleInterface, payload?: string) {
     this.payload = payload
+    this.repository = repository
   }
 
   async execute (): Promise<any> {

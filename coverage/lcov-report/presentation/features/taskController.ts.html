@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.46% </span>
+                <span class="strong">77.77% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>55/71</span>
+                <span class='fraction'>56/72</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.46% </span>
+                <span class="strong">77.77% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>55/71</span>
+                <span class='fraction'>56/72</span>
             </div>
         
             
@@ -134,7 +134,9 @@
 <a name='L69'></a><a href='#L69'>69</a>
 <a name='L70'></a><a href='#L70'>70</a>
 <a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -213,13 +215,14 @@ import { UpdateTaskSchedulerUseCase } from '../../domain/features/UpdateTaskSche
 import { DeleteTaskSchedulerUseCase } from '../../domain/features/DeleteTaskSchedulerUseCase'
 import { type TaskScheduleData } from '../../domain/models/TaskScheduleData'
 import { MissingParamError } from '../helpers/MissingParamError'
+import { type TaskScheduleInterface } from '../../domain/protocols/TaskScheduleInterface'
 &nbsp;
-export const postSchedule = async (bodyParams: TaskScheduleData): Promise&lt;object&gt; =&gt; {
+export const postSchedule = async (bodyParams: TaskScheduleData, repository: TaskScheduleInterface): Promise&lt;object&gt; =&gt; {
   try {
     if (!bodyParams.description || !bodyParams.name) {
       return HttpResponse.badRequest('name or description')
     }
-    const createdSchedule = new CreateTaskSchedulerUseCase(bodyParams)
+    const createdSchedule = new CreateTaskSchedulerUseCase(bodyParams, repository)
     return await createdSchedule.execute()
   } <span class="branch-0 cbranch-no" title="branch not covered" >catch (error) {</span>
 <span class="cstat-no" title="statement not covered" >    console.error(error)</span>
@@ -227,9 +230,9 @@ export const postSchedule = async (bodyParams: TaskScheduleData): Promise&lt;obj
 <span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;
-export const getAllSchedules = async (): Promise&lt;object[] | object&gt; =&gt; {
+export const getAllSchedules = async (repository: TaskScheduleInterface): Promise&lt;object[] | object&gt; =&gt; {
   try {
-    const getAll = new GetTaskSchedulerUseCase()
+    const getAll = new GetTaskSchedulerUseCase(repository)
     return await getAll.execute()
   } <span class="branch-0 cbranch-no" title="branch not covered" >catch (error) {</span>
 <span class="cstat-no" title="statement not covered" >    console.error(error)</span>
@@ -237,9 +240,9 @@ export const getAllSchedules = async (): Promise&lt;object[] | object&gt; =&gt; 
 <span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;
-export const getScheduleByName = async (name: string): Promise&lt;object&gt; =&gt; {
+export const getScheduleByName = async (name: string, repository: TaskScheduleInterface): Promise&lt;object&gt; =&gt; {
   try {
-    const getByName = new GetTaskSchedulerByNameUseCase(name)
+    const getByName = new GetTaskSchedulerByNameUseCase(repository, name)
     return await getByName.execute()
   } <span class="branch-0 cbranch-no" title="branch not covered" >catch (error) {</span>
 <span class="cstat-no" title="statement not covered" >    console.error(error)</span>
@@ -247,12 +250,12 @@ export const getScheduleByName = async (name: string): Promise&lt;object&gt; =&g
 <span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;
-export const updateSchedule = async (id: string, bodyRequest: TaskScheduleData): Promise&lt;object&gt; =&gt; {
+export const updateSchedule = async (id: string, bodyRequest: TaskScheduleData, repository: TaskScheduleInterface): Promise&lt;object&gt; =&gt; {
   try {
     if (!id || !bodyRequest.name || !bodyRequest.description) {
       return new MissingParamError('id query, name or description')
     }
-    const updateSchedule = new UpdateTaskSchedulerUseCase(id, bodyRequest)
+    const updateSchedule = new UpdateTaskSchedulerUseCase(id, bodyRequest, repository)
     return await updateSchedule.execute()
   } <span class="branch-0 cbranch-no" title="branch not covered" >catch (error) {</span>
 <span class="cstat-no" title="statement not covered" >    console.error(error)</span>
@@ -260,9 +263,9 @@ export const updateSchedule = async (id: string, bodyRequest: TaskScheduleData):
 <span class="cstat-no" title="statement not covered" >  }</span>
 }
 &nbsp;
-export const deleteSchedule = async (id: string): Promise&lt;object&gt; =&gt; {
+export const deleteSchedule = async (id: string, repository: TaskScheduleInterface): Promise&lt;object&gt; =&gt; {
   try {
-    const toDelete = new DeleteTaskSchedulerUseCase(id)
+    const toDelete = new DeleteTaskSchedulerUseCase(id, repository)
     return await toDelete.execute()
   } <span class="branch-0 cbranch-no" title="branch not covered" >catch (error) {</span>
 <span class="cstat-no" title="statement not covered" >    return HttpResponse.serverError</span>
@@ -283,7 +286,7 @@ export const healthCheck = async (): Promise&lt;string | object&gt; =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-08-16T14:21:56.848Z
+                at 2023-08-16T14:45:48.161Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -2,7 +2,7 @@ import { prisma } from '../../../../../prisma/prisma'
 import { type TaskScheduleData } from '../../../../domain/models/TaskScheduleData'
 import { type TaskScheduleInterface } from '../../../../domain/protocols/TaskScheduleInterface'
 
-export default class TaskSchedulerRepository implements TaskScheduleInterface {
+export class TaskSchedulerRepository implements TaskScheduleInterface {
   saveSchedule (schedule: TaskScheduleData): object {
     return prisma.schedule.create({
       data: schedule

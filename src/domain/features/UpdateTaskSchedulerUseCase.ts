@@ -1,4 +1,3 @@
-import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/TaskSchedulerRepository'
 import { type TaskScheduleData } from '../models/TaskScheduleData'
 import { type TaskScheduleInterface } from '../protocols/TaskScheduleInterface'
 import { HttpResponse } from '../../presentation/helpers/HttpResponse'
@@ -9,10 +8,11 @@ import { MissingBodyError } from '../../presentation/helpers/MissingBodyError'
 export class UpdateTaskSchedulerUseCase implements BaseUseCase {
   private readonly id: string
   private readonly payload: TaskScheduleData
-  private readonly repository: TaskScheduleInterface = new TaskSchedulerRepository()
-  constructor (id: string, payload: TaskScheduleData) {
+  private readonly repository: TaskScheduleInterface
+  constructor (id: string, payload: TaskScheduleData, repository: TaskScheduleInterface) {
     this.id = id
     this.payload = payload
+    this.repository = repository
   }
 
   async execute (): Promise<any> {

@@ -1,10 +1,12 @@
-import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/TaskSchedulerRepository'
 import { type TaskScheduleInterface } from '../protocols/TaskScheduleInterface'
 import { HttpResponse } from '../../presentation/helpers/HttpResponse'
 import { type BaseUseCase } from '../../infra/base/BaseUseCase'
 
 export class GetTaskSchedulerUseCase implements BaseUseCase {
-  private readonly repository: TaskScheduleInterface = new TaskSchedulerRepository()
+  private readonly repository: TaskScheduleInterface
+  constructor (repository: TaskScheduleInterface) {
+    this.repository = repository
+  }
 
   async execute (): Promise<any> {
     const schedule = await this.repository.getAllSchedule()

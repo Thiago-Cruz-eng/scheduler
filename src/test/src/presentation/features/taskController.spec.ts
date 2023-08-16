@@ -7,18 +7,21 @@ import { DeleteTaskSchedulerUseCase } from '../../../../domain/features/DeleteTa
 import { UpdateTaskSchedulerUseCase } from '../../../../domain/features/UpdateTaskSchedulerUseCase'
 import { HttpResponse } from '../../../../presentation/helpers/HttpResponse'
 import { MissingParamError } from '../../../../presentation/helpers/MissingParamError'
+import { type TaskScheduleInterface } from '../../../../domain/protocols/TaskScheduleInterface'
 
 jest.mock('../../../../domain/features/CreateTaskSchedulerUseCase')
 jest.mock('../../../../domain/features/GetTaskSchedulerUseCase')
 jest.mock('../../../../domain/features/GetTaskSchedulerByNameUseCase')
 jest.mock('../../../../domain/features/UpdateTaskSchedulerUseCase')
 jest.mock('../../../../domain/features/DeleteTaskSchedulerUseCase')
+jest.mock('../../../../data/taskScheduler/repository/scheduler/TaskSchedulerRepository')
 
 const CreateUseCaseMock = CreateTaskSchedulerUseCase as jest.Mock<CreateTaskSchedulerUseCase>
 const GetAllUseCaseMock = GetTaskSchedulerUseCase as jest.Mock<GetTaskSchedulerUseCase>
 const GetByNameUseCaseMock = GetTaskSchedulerByNameUseCase as jest.Mock<GetTaskSchedulerByNameUseCase>
 const UpdateUseCaseMock = UpdateTaskSchedulerUseCase as jest.Mock<UpdateTaskSchedulerUseCase>
 const DeleteUseCaseMock = DeleteTaskSchedulerUseCase as jest.Mock<DeleteTaskSchedulerUseCase>
+let repo: TaskScheduleInterface
 
 describe('taskController', () => {
   describe('POST', () => {
@@ -28,7 +31,7 @@ describe('taskController', () => {
         execute: jest.fn(async () => await Promise.resolve(HttpResponse.badRequest('name or description')))
       }))
 
-      const sut = await controller.postSchedule(bodyParams)
+      const sut = await controller.postSchedule(bodyParams, repo)
       expect(sut).toEqual(HttpResponse.badRequest('name or description'))
     })
 
@@ -38,7 +41,7 @@ describe('taskController', () => {
         execute: jest.fn(async () => await Promise.resolve(HttpResponse.badRequest('name or description')))
       }))
 
-      const sut = await controller.postSchedule(bodyParams)
+      const sut = await controller.postSchedule(bodyParams, repo)
       expect(sut).toEqual(HttpResponse.badRequest('name or description'))
     })
 
@@ -48,7 +51,7 @@ describe('taskController', () => {
         execute: jest.fn(async () => await Promise.resolve('New Schedule'))
       }))
 
-      const result = await controller.postSchedule(bodyParams)
+      const result = await controller.postSchedule(bodyParams, repo)
       expect(result).toBe('New Schedule')
     })
   })
@@ -60,7 +63,7 @@ describe('taskController', () => {
           await Promise.resolve(HttpResponse.notFound('no schedule found')))
       }))
 
-      const sut = await controller.getAllSchedules()
+      const sut = await controller.getAllSchedules(repo)
       expect(sut).toEqual(HttpResponse.notFound('no schedule found'))
     })
 
@@ -70,7 +73,7 @@ describe('taskController', () => {
         execute: jest.fn(async () => await Promise.resolve(scheduleReturn))
       }))
 
-      const sut = await controller.getAllSchedules()
+      const sut = await controller.getAllSchedules(repo)
       expect(sut).toEqual(scheduleReturn)
     })
   })
@@ -82,7 +85,7 @@ describe('taskController', () => {
           await Promise.resolve(HttpResponse.notFound('no schedule found')))
       }))
 
-      const sut = await controller.getScheduleByName('')
+      const sut = await controller.getScheduleByName('', repo)
       expect(sut).toEqual(HttpResponse.notFound('no schedule found'))
     })
 
@@ -94,7 +97,7 @@ describe('taskController', () => {
           await Promise.resolve(schedule))
       }))
 
-      const sut = await controller.getScheduleByName(payload)
+      const sut = await controller.getScheduleByName(payload, repo)
 
       expect(sut).toEqual(schedule)
     })
@@ -104,7 +107,7 @@ describe('taskController', () => {
     it('Should return Missing param if any param is no provided', async () => {
       const scheduleRequest = scheduler.mock.mockRequest
 
-      const sut = await controller.updateSchedule('', scheduleRequest)
+      const sut = await controller.updateSchedule('', scheduleRequest, repo)
       expect(sut).toEqual(new MissingParamError('id query, name or description'))
     })
 
@@ -117,7 +120,7 @@ describe('taskController', () => {
           await Promise.resolve(HttpResponse.goodRequest(schedule)))
       }))
 
-      const sut = await controller.updateSchedule(payload, scheduleRequest)
+      const sut = await controller.updateSchedule(payload, scheduleRequest, repo)
       expect(sut).toEqual(HttpResponse.goodRequest(schedule))
     })
   })
@@ -129,7 +132,7 @@ describe('taskController', () => {
           await Promise.resolve(new MissingParamError('id')))
       }))
 
-      const sut = await controller.deleteSchedule('')
+      const sut = await controller.deleteSchedule('', repo)
       expect(sut).toEqual(new MissingParamError('id'))
     })
 
@@ -141,7 +144,7 @@ describe('taskController', () => {
           await Promise.resolve(HttpResponse.goodRequest(schedule)))
       }))
 
-      const sut = await controller.deleteSchedule(payload)
+      const sut = await controller.deleteSchedule(payload, repo)
       expect(sut).toEqual(HttpResponse.goodRequest(schedule))
     })
   })

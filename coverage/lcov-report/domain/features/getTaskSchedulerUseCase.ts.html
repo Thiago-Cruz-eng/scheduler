@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">35.71% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/14</span>
+                <span class='fraction'>10/16</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">35.71% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/14</span>
+                <span class='fraction'>10/16</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -77,34 +77,40 @@
 <a name='L12'></a><a href='#L12'>12</a>
 <a name='L13'></a><a href='#L13'>13</a>
 <a name='L14'></a><a href='#L14'>14</a>
-<a name='L15'></a><a href='#L15'>15</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import TaskSchedulerRepository from '../../data/taskScheduler/repository/scheduler/TaskSchedulerRepository'
-import { type TaskScheduleInterface } from '../protocols/TaskScheduleInterface'
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { type TaskScheduleInterface } from '../protocols/TaskScheduleInterface'
 import { HttpResponse } from '../../presentation/helpers/HttpResponse'
 import { type BaseUseCase } from '../../infra/base/BaseUseCase'
 &nbsp;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export class GetTaskSchedulerUseCase implements BaseUseCase {</span></span>
-<span class="cstat-no" title="statement not covered" >  private readonly repository: TaskScheduleInterface = new TaskSchedulerRepository()</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  async execute (): Promise&lt;any&gt; {</span></span>
+export class GetTaskSchedulerUseCase implements BaseUseCase {
+  private readonly repository: TaskScheduleInterface
+<span class="fstat-no" title="function not covered" >  constructor (repository: TaskScheduleInterface) {</span>
+<span class="cstat-no" title="statement not covered" >    this.repository = repository</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >  async execute (): Promise&lt;any&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    const schedule = await this.repository.getAllSchedule()</span>
 <span class="cstat-no" title="statement not covered" >    if (!schedule) return HttpResponse.notFound('no schedule found')</span>
 <span class="cstat-no" title="statement not covered" >    return HttpResponse.goodRequest(schedule)</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -112,7 +118,7 @@ import { type BaseUseCase } from '../../infra/base/BaseUseCase'
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-08-16T14:21:56.848Z
+                at 2023-08-16T14:45:48.161Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
