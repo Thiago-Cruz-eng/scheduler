@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1692044990473" clover="3.2.0">
-  <project timestamp="1692044990473" name="All files">
-    <metrics statements="681" coveredstatements="167" conditionals="19" coveredconditionals="3" methods="42" coveredmethods="1" elements="742" coveredelements="171" complexity="0" loc="681" ncloc="681" packages="17" files="25" classes="25"/>
+<coverage generated="1692186550720" clover="3.2.0">
+  <project timestamp="1692186550721" name="All files">
+    <metrics statements="681" coveredstatements="172" conditionals="21" coveredconditionals="4" methods="42" coveredmethods="2" elements="744" coveredelements="178" complexity="0" loc="681" ncloc="681" packages="17" files="25" classes="25"/>
     <package name="data.taskScheduler">
       <metrics statements="1" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="taskSchedulerService.ts" path="C:\Users\thiago.cruz\Documents\Proj\Pessoal\scheduler\src\data\taskScheduler\taskSchedulerService.ts">
@@ -330,7 +330,7 @@
     </package>
     <package name="presentation.enum">
       <metrics statements="86" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="cronEvent.ts" path="C:\Users\thiago.cruz\Documents\Proj\Pessoal\scheduler\src\presentation\enum\cronEvent.ts">
+      <file name="CronEvent.ts" path="C:\Users\thiago.cruz\Documents\Proj\Pessoal\scheduler\src\presentation\enum\CronEvent.ts">
         <metrics statements="86" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
         <line num="2" count="0" type="stmt"/>
@@ -421,9 +421,9 @@
       </file>
     </package>
     <package name="presentation.features">
-      <metrics statements="70" coveredstatements="27" conditionals="4" coveredconditionals="3" methods="6" coveredmethods="1"/>
+      <metrics statements="70" coveredstatements="32" conditionals="6" coveredconditionals="4" methods="6" coveredmethods="2"/>
       <file name="taskController.ts" path="C:\Users\thiago.cruz\Documents\Proj\Pessoal\scheduler\src\presentation\features\taskController.ts">
-        <metrics statements="70" coveredstatements="27" conditionals="4" coveredconditionals="3" methods="6" coveredmethods="1"/>
+        <metrics statements="70" coveredstatements="32" conditionals="6" coveredconditionals="4" methods="6" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -445,15 +445,15 @@
         <line num="19" count="0" type="stmt"/>
         <line num="20" count="3" type="stmt"/>
         <line num="21" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
+        <line num="22" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="2" type="cond" truecount="0" falsecount="1"/>
         <line num="27" count="0" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
         <line num="32" count="1" type="stmt"/>
         <line num="33" count="0" type="stmt"/>

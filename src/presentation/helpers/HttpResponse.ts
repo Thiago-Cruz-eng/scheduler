@@ -16,7 +16,7 @@ export class HttpResponse {
 
   static notFound (paramName: string): object {
     return {
-      stausCode: 404,
+      stausCode: 401,
       body: `${paramName}`
     }
   }

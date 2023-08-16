@@ -52,8 +52,14 @@ describe('taskController', () => {
   })
 
   describe('GET ALL', () => {
-    it('getAllSchedules', () => {
-      expect(1).toBe(1)
+    it('Should return 401 if no scheduler is provided', async () => {
+      GetAllUseCaseMock.mockImplementation((): any => ({
+        execute: jest.fn(async () =>
+          await Promise.resolve(HttpResponse.notFound('no schedule found')))
+      }))
+
+      const sut = await controller.getAllSchedules()
+      expect(sut).toBe(HttpResponse.notFound('no schedule found'))
     })
   })
 
