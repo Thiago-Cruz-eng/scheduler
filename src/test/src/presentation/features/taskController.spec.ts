@@ -77,6 +77,16 @@ describe('taskController', () => {
   })
 
   describe('GET BY NAME', () => {
+    it('Should return 401 if no name is provided', async () => {
+      GetByNameUseCaseMock.mockImplementation((): any => ({
+        execute: jest.fn(async () =>
+          await Promise.resolve(HttpResponse.notFound('no schedule found')))
+      }))
+
+      const sut = await controller.getScheduleByName('')
+      expect(sut).toBe(HttpResponse.notFound('no schedule found'))
+    })
+
     it('Should return a scheduler if name is provided', async () => {
       const payload = scheduler.mock.mockParamsToGetByName.name
       const schedule = scheduler.mock.afterDoneMockPost
