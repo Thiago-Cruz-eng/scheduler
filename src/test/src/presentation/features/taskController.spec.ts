@@ -61,6 +61,16 @@ describe('taskController', () => {
       const sut = await controller.getAllSchedules()
       expect(sut).toBe(HttpResponse.notFound('no schedule found'))
     })
+
+    it('Should return a scheduler if id is provided', async () => {
+      const scheduleReturn = scheduler.mock.initialMockPost
+      GetAllUseCaseMock.mockImplementation((): any => ({
+        execute: jest.fn(async () => await Promise.resolve(scheduleReturn))
+      }))
+
+      const sut = await controller.getAllSchedules()
+      expect(sut).toEqual(scheduleReturn)
+    })
   })
 
   describe('GET BY NAME', () => {
