@@ -6,20 +6,19 @@ import { GetTaskSchedulerByNameUseCase } from '../../../../domain/features/GetTa
 import { DeleteTaskSchedulerUseCase } from '../../../../domain/features/DeleteTaskSchedulerUseCase'
 import { UpdateTaskSchedulerUseCase } from '../../../../domain/features/UpdateTaskSchedulerUseCase'
 import { HttpResponse } from '../../../../presentation/helpers/HttpResponse'
+import { MissingParamError } from '../../../../presentation/helpers/MissingParamError'
 
 jest.mock('../../../../domain/features/CreateTaskSchedulerUseCase')
 jest.mock('../../../../domain/features/GetTaskSchedulerUseCase')
 jest.mock('../../../../domain/features/GetTaskSchedulerByNameUseCase')
 jest.mock('../../../../domain/features/UpdateTaskSchedulerUseCase')
 jest.mock('../../../../domain/features/DeleteTaskSchedulerUseCase')
-jest.mock('../../../../presentation/helpers/HttpResponse')
-jest.mock('../../../../presentation/helpers/MissingParamError')
 
 const CreateUseCaseMock = CreateTaskSchedulerUseCase as jest.Mock<CreateTaskSchedulerUseCase>
 const GetAllUseCaseMock = GetTaskSchedulerUseCase as jest.Mock<GetTaskSchedulerUseCase>
 const GetByNameUseCaseMock = GetTaskSchedulerByNameUseCase as jest.Mock<GetTaskSchedulerByNameUseCase>
-const DeleteUseCaseMock = DeleteTaskSchedulerUseCase as jest.Mock<DeleteTaskSchedulerUseCase>
 const UpdateUseCaseMock = UpdateTaskSchedulerUseCase as jest.Mock<UpdateTaskSchedulerUseCase>
+const DeleteUseCaseMock = DeleteTaskSchedulerUseCase as jest.Mock<DeleteTaskSchedulerUseCase>
 
 describe('taskController', () => {
   describe('POST', () => {
@@ -62,7 +61,7 @@ describe('taskController', () => {
       }))
 
       const sut = await controller.getAllSchedules()
-      expect(sut).toBe(HttpResponse.notFound('no schedule found'))
+      expect(sut).toEqual(HttpResponse.notFound('no schedule found'))
     })
 
     it('Should return a scheduler if id is provided', async () => {
@@ -84,7 +83,7 @@ describe('taskController', () => {
       }))
 
       const sut = await controller.getScheduleByName('')
-      expect(sut).toBe(HttpResponse.notFound('no schedule found'))
+      expect(sut).toEqual(HttpResponse.notFound('no schedule found'))
     })
 
     it('Should return a scheduler if name is provided', async () => {
@@ -102,14 +101,52 @@ describe('taskController', () => {
   })
 
   describe('PUT', () => {
-    it('updateSchedule', () => {
-      expect(1).toBe(1)
+    it('Should return Missing param if any param is no provided', async () => {
+      const scheduleRequest = scheduler.mock.mockRequest
+      UpdateUseCaseMock.mockImplementation((): any => ({
+        execute: jest.fn(async () =>
+          await Promise.resolve(new MissingParamError('id')))
+      }))
+
+      const sut = await controller.updateSchedule('', scheduleRequest)
+      expect(sut).toEqual(new MissingParamError('id query, name or description'))
+    })
+
+    it('Should return a scheduler if id is provided', async () => {
+      const payload = scheduler.mock.initialMockPost.id
+      const scheduleRequest = scheduler.mock.mockRequest
+      const schedule = scheduler.mock.initialMockPost
+      UpdateUseCaseMock.mockImplementation((): any => ({
+        execute: jest.fn(async () =>
+          await Promise.resolve(HttpResponse.goodRequest(schedule)))
+      }))
+
+      const sut = await controller.updateSchedule(payload, scheduleRequest)
+      expect(sut).toEqual(HttpResponse.goodRequest(schedule))
     })
   })
 
   describe('DEL', () => {
-    it('deleteSchedule', () => {
-      expect(1).toBe(1)
+    it('Should return Missing param if id is no provided', async () => {
+      DeleteUseCaseMock.mockImplementation((): any => ({
+        execute: jest.fn(async () =>
+          await Promise.resolve(new MissingParamError('id')))
+      }))
+
+      const sut = await controller.deleteSchedule('')
+      expect(sut).toEqual(new MissingParamError('id'))
+    })
+
+    it('Should return a scheduler deleted if id is provided', async () => {
+      const payload = scheduler.mock.initialMockPost.id
+      const schedule = scheduler.mock.afterDeleteMockPost
+      DeleteUseCaseMock.mockImplementation((): any => ({
+        execute: jest.fn(async () =>
+          await Promise.resolve(HttpResponse.goodRequest(schedule)))
+      }))
+
+      const sut = await controller.deleteSchedule(payload)
+      expect(sut).toEqual(HttpResponse.goodRequest(schedule))
     })
   })
 
