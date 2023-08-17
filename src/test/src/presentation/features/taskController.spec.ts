@@ -24,6 +24,10 @@ const DeleteUseCaseMock = DeleteTaskSchedulerUseCase as jest.Mock<DeleteTaskSche
 let repo: TaskScheduleInterface
 
 describe('taskController', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
   describe('POST', () => {
     it('Should return 400 if no name is provided', async () => {
       const bodyParams = scheduler.mock.mockRequestWithoutName
@@ -45,14 +49,21 @@ describe('taskController', () => {
       expect(sut).toEqual(HttpResponse.badRequest('name or description'))
     })
 
+    it('Should return 500 if fall in catch block', async () => {
+      const bodyParams = scheduler.mock.mockRequestWithoutDescription
+      CreateUseCaseMock.mockImplementation((): any => Promise.resolve(HttpResponse.serverError))
+      const sut = await controller.postSchedule(bodyParams, repo)
+      expect(sut).toEqual(HttpResponse.serverError)
+    })
+
     it('Should create a schedule if name and description is provided', async () => {
       const bodyParams = scheduler.mock.mockRequest
       CreateUseCaseMock.mockImplementation((): any => ({
         execute: jest.fn(async () => await Promise.resolve('New Schedule'))
       }))
 
-      const result = await controller.postSchedule(bodyParams, repo)
-      expect(result).toBe('New Schedule')
+      const sut = await controller.postSchedule(bodyParams, repo)
+      expect(sut).toBe('New Schedule')
     })
   })
 
@@ -65,6 +76,12 @@ describe('taskController', () => {
 
       const sut = await controller.getAllSchedules(repo)
       expect(sut).toEqual(HttpResponse.notFound('no schedule found'))
+    })
+
+    it('Should return 500 if fall in catch block', async () => {
+      GetAllUseCaseMock.mockImplementation((): any => Promise.resolve(HttpResponse.serverError))
+      const sut = await controller.getAllSchedules(repo)
+      expect(sut).toEqual(HttpResponse.serverError)
     })
 
     it('Should return a scheduler if id is provided', async () => {
@@ -89,6 +106,12 @@ describe('taskController', () => {
       expect(sut).toEqual(HttpResponse.notFound('no schedule found'))
     })
 
+    it('Should return 500 if fall in catch block', async () => {
+      GetByNameUseCaseMock.mockImplementation((): any => Promise.resolve(HttpResponse.serverError))
+      const sut = await controller.getScheduleByName('', repo)
+      expect(sut).toEqual(HttpResponse.serverError)
+    })
+
     it('Should return a scheduler if name is provided', async () => {
       const payload = scheduler.mock.mockParamsToGetByName.name
       const schedule = scheduler.mock.afterDoneMockPost
@@ -109,6 +132,13 @@ describe('taskController', () => {
 
       const sut = await controller.updateSchedule('', scheduleRequest, repo)
       expect(sut).toEqual(new MissingParamError('id query, name or description'))
+    })
+
+    it('Should return 500 if fall in catch block', async () => {
+      const scheduleRequest = scheduler.mock.mockRequest
+      UpdateUseCaseMock.mockImplementation((): any => Promise.resolve(HttpResponse.serverError))
+      const sut = await controller.updateSchedule('123', scheduleRequest, repo)
+      expect(sut).toEqual(HttpResponse.serverError)
     })
 
     it('Should return a scheduler if id is provided', async () => {
@@ -134,6 +164,12 @@ describe('taskController', () => {
 
       const sut = await controller.deleteSchedule('', repo)
       expect(sut).toEqual(new MissingParamError('id'))
+    })
+
+    it('Should return 500 if fall in catch block', async () => {
+      DeleteUseCaseMock.mockImplementation((): any => Promise.resolve(HttpResponse.serverError))
+      const sut = await controller.deleteSchedule('', repo)
+      expect(sut).toEqual(HttpResponse.serverError)
     })
 
     it('Should return a scheduler deleted if id is provided', async () => {

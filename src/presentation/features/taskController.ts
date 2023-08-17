@@ -16,7 +16,7 @@ export const postSchedule = async (bodyParams: TaskScheduleData, repository: Tas
     const createdSchedule = new CreateTaskSchedulerUseCase(bodyParams, repository)
     return await createdSchedule.execute()
   } catch (error) {
-    console.error(error)
+    console.log(error)
     return HttpResponse.serverError
   }
 }
@@ -26,7 +26,7 @@ export const getAllSchedules = async (repository: TaskScheduleInterface): Promis
     const getAll = new GetTaskSchedulerUseCase(repository)
     return await getAll.execute()
   } catch (error) {
-    console.error(error)
+    console.log(error)
     return HttpResponse.serverError
   }
 }
@@ -36,7 +36,7 @@ export const getScheduleByName = async (name: string, repository: TaskScheduleIn
     const getByName = new GetTaskSchedulerByNameUseCase(repository, name)
     return await getByName.execute()
   } catch (error) {
-    console.error(error)
+    console.log(error)
     return HttpResponse.serverError
   }
 }
@@ -49,7 +49,7 @@ export const updateSchedule = async (id: string, bodyRequest: TaskScheduleData, 
     const updateSchedule = new UpdateTaskSchedulerUseCase(id, bodyRequest, repository)
     return await updateSchedule.execute()
   } catch (error) {
-    console.error(error)
+    console.log(error)
     return HttpResponse.serverError
   }
 }
