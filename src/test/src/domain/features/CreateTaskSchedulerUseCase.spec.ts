@@ -8,16 +8,16 @@ describe('CREATE USE CASE', () => {
   it('should return missing param error if no payload is provided', async () => {
     const payload = scheduler.mock.mockRequestWithoutName
 
-    const sut = await new CreateTaskSchedulerUseCase(payload, repository)
+    const sut = await new CreateTaskSchedulerUseCase(payload, repository).execute()
 
-    expect(await sut.execute()).toEqual(new MissingParamError('name'))
+    expect(await sut).toEqual(new MissingParamError('name'))
   })
 
   it('should return a new scheduler if right payload is provided', async () => {
     const payload = scheduler.mock.mockRequest
 
-    const sut = await new CreateTaskSchedulerUseCase(payload, repository)
+    const sut = await new CreateTaskSchedulerUseCase(payload, repository).execute()
 
-    expect(await sut.execute()).toEqual(HttpResponse.goodRequest(scheduler.mock.initialMockPost))
+    expect(await sut).toEqual(HttpResponse.goodRequest(scheduler.mock.initialMockPost))
   })
 })

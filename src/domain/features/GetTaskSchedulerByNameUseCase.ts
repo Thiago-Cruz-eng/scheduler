@@ -5,7 +5,7 @@ import { type BaseUseCase } from '../../infra/base/BaseUseCase'
 export class GetTaskSchedulerByNameUseCase implements BaseUseCase {
   private readonly payload?: string
   private readonly repository: TaskScheduleInterface
-  constructor (repository: TaskScheduleInterface, payload?: string) {
+  constructor (repository: TaskScheduleInterface, payload: string) {
     this.payload = payload
     this.repository = repository
   }
@@ -19,5 +19,6 @@ export class GetTaskSchedulerByNameUseCase implements BaseUseCase {
       }
       return HttpResponse.goodRequest(schedule)
     }
+    return HttpResponse.badRequest('name')
   }
 }

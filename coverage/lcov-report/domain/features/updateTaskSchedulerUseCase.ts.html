@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/30</span>
+                <span class='fraction'>30/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/30</span>
+                <span class='fraction'>30/30</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -105,23 +105,23 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { type TaskScheduleData } from '../models/TaskScheduleData'
 import { type TaskScheduleInterface } from '../protocols/TaskScheduleInterface'
@@ -134,24 +134,24 @@ export class UpdateTaskSchedulerUseCase implements BaseUseCase {
   private readonly id: string
   private readonly payload: TaskScheduleData
   private readonly repository: TaskScheduleInterface
-<span class="fstat-no" title="function not covered" >  constructor (id: string, payload: TaskScheduleData, repository: TaskScheduleInterface) {</span>
-<span class="cstat-no" title="statement not covered" >    this.id = id</span>
-<span class="cstat-no" title="statement not covered" >    this.payload = payload</span>
-<span class="cstat-no" title="statement not covered" >    this.repository = repository</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  constructor (id: string, payload: TaskScheduleData, repository: TaskScheduleInterface) {
+    this.id = id
+    this.payload = payload
+    this.repository = repository
+  }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  async execute (): Promise&lt;any&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (!this.id) {</span>
-<span class="cstat-no" title="statement not covered" >      return new MissingParamError('id')</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    if (!this.payload.name) {</span>
-<span class="cstat-no" title="statement not covered" >      return new MissingBodyError('name')</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    const schedule = await this.repository.updateSchedule(this.id, this.payload)</span>
-<span class="cstat-no" title="statement not covered" >    return HttpResponse.goodRequest(schedule)</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  async execute (): Promise&lt;any&gt; {
+    if (!this.id) {
+      return new MissingParamError('id')
+    }
+&nbsp;
+    if (!this.payload.name) {
+      return new MissingBodyError('name')
+    }
+&nbsp;
+    const schedule = await this.repository.updateSchedule(this.id, this.payload)
+    return HttpResponse.goodRequest(schedule)
+  }
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -160,7 +160,7 @@ export class UpdateTaskSchedulerUseCase implements BaseUseCase {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-08-18T10:56:18.541Z
+                at 2023-08-18T13:18:45.264Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

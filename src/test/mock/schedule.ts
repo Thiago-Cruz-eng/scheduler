@@ -29,6 +29,17 @@ export const mock = {
     dateApiReturn: null
   },
 
+  upadatedInitialMockPost: {
+    id: '906e3973-24d8-4ed6-b2c0-d2dfcd09db67',
+    name: 'abc',
+    description: 'cba',
+    dateSchedule: '2023-08-18T13:30:36.912Z',
+    done: false,
+    deleted: false,
+    apiReturn: null,
+    dateApiReturn: null
+  },
+
   afterDoneMockPost: {
     id: '906e3973-24d8-4ed6-b2c0-d2dfcd09db67',
     name: 'mock01',
